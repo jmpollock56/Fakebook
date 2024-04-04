@@ -1,18 +1,21 @@
 import express from "express"
-
-
+import { getUser, getUsers, createUser } from "./database/db_connection.js";
 
 const app = express();
 
-app.get('/api/users', (req, res) => {
-
+function verifyUser(){
   
-  res.json({"users": ["user1", "user2", "user3"]});
-})
+}
 
-app.use((err, req, res, next) => {
-  console.log(err)
-  res.status(500).send('Something Broke!')
+app.get('/api/users', async (req, res) => {
+  try{
+    const users = await getUsers();
+    console.log(users);
+    res.send(users);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Something Broke');
+  }
 })
 
 app.listen(3000, () => {
