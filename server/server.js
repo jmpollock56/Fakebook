@@ -25,7 +25,7 @@ app.post('/api/login', async (req, res) => {
 
   for(let i = 0; i < users.length; i++){
 
-    if(emailOrPhone === users[i].username && password === users[i].password){
+    if(emailOrPhone === users[i].email && password === users[i].password){
       isUser = true;
       break;
     } else {

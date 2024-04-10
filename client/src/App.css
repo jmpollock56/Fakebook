@@ -22,31 +22,32 @@ body{
   display: flex;
   flex-direction: row;
   align-items: center;
-  height:100%;
-  width: 60%;
-  left: 20%;
+  height: 100%;
+  width: 600px;
+  left: 25%;
 }
 
 .left-container{
   position: relative;
   box-sizing: border-box;
   left: 0;
+  bottom: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 35%;
+  width: 200px;
   
 }
 
 .logo{
   margin: 0;
   color: #1877F2;
-  font-size: 35px;
+  font-size: 40px;
 }
 
 .lower-logo{
   margin: 0;
-  font-size: 18px;
+  font-size: 13px;
 }
 
 .right-container{
@@ -57,7 +58,7 @@ body{
   align-items: center;
   height: 50%;
   width: 40%;
- right: 0;
+  right: 0;
 }
 
 .main-right-container{
@@ -138,4 +139,24 @@ form{
 
 button{
   cursor: pointer;
+}
+
+@media (max-width: 600px){
+  .home-container{
+    top: 35px;
+    left: 40px;
+  }
+  .main-container{
+    display: block;
+    padding: 10px;
+    justify-content: center;
+    left: 0;
+    width: 200px;
+  }
+
+  .left-container{
+    position: relative;
+    left: 80px;
+    margin-bottom: 15px;
+  }
 }

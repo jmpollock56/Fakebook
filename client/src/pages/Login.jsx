@@ -1,11 +1,15 @@
 import React, {useState, useEffect} from "react";
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import Popup from 'reactjs-popup'
+import CreateAccountPop from "../components/CreateAccountPop";
 import "../App.css";
+import "../popup.css";
 
 export default function Login() {
   
   const [emailOrPhone, setEmailOrPhone] = useState('');
   const [password, setPassword] = useState('');
+  const navigateTo = useNavigate();
 
   async function handleSubmit(e){
     e.preventDefault();
@@ -18,9 +22,9 @@ export default function Login() {
         body: JSON.stringify({emailOrPhone, password}),
       });
 
-      if(response.ok){
+      if (response.ok){
         console.log('success');
-        alert(`Welcome ${emailOrPhone}`);
+        navigateTo('/home');
       } else {
         alert('no');
         console.error('failed');
@@ -30,8 +34,7 @@ export default function Login() {
     }
     
   }
-
-
+    
   return (
     <div className="home-container">
 
@@ -71,7 +74,9 @@ export default function Login() {
             <hr />
 
             <div className="create-container">
-              <button className="create-new-account"><b>Create new account</b></button>
+              <Popup trigger={<button className="create-new-account">Create new account</button>} modal nested>
+                <CreateAccountPop />
+              </Popup>
             </div>
           
           </div>
