@@ -1,0 +1,73 @@
+.background{
+  position: fixed;
+  margin: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.2);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pop-up-container{
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  width: 400px;
+  padding: 10px;
+  z-index: 4000;
+  background-color: skyblue;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.top{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.profile{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.post-form{
+  border: 1px solid skyblue;
+  margin-top: 10px;
+}
+
+.post-content-area{
+  border-radius: 25px;
+  background-color: skyblue;
+  box-sizing: content-box;
+  padding: 10px;
+  max-height: 230px;
+  color: white;
+  font-weight: 400;
+}
+
+.post-content-area:focus{
+  border: none;
+  outline: 0;
+}
+
+.submit-post{
+  background-color: white;
+  margin-top: 20px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.close-popup{
+  width: 25px;
+  border-radius: 50%;
+  background-color: rgb(102, 196, 233);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
+}
+

@@ -1,31 +1,39 @@
 import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom"
-import Popup from 'reactjs-popup'
 import CreateAccountPop from "../components/CreateAccountPop";
-import "../App.css";
-import "../popup.css";
+import "../styles/App.css";
+
+
 
 export default function Login() {
   
   const [emailOrPhone, setEmailOrPhone] = useState('');
   const [password, setPassword] = useState('');
+  const [currentUser, setCurrentUser] = useState({});
+  const [isCreateAccount, setIsCreateAccount] = useState(false);
+  
   const navigateTo = useNavigate();
 
   async function handleSubmit(e){
     e.preventDefault();
     
     try{
-      console.log(emailOrPhone, password);
       const response = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({emailOrPhone, password}),
+        body: JSON.stringify({ emailOrPhone, password }),
       });
-
-      if (response.ok){
+      
+    
+      if (response.ok){    
+        const data = await response.json();
+        setCurrentUser(data.currentUser);
+        localStorage.setItem('currentUser', JSON.stringify(data.currentUser));
+        
         console.log('success');
+
         navigateTo('/home');
-      } else {
+      } else { 
         alert('no');
         console.error('failed');
       }
@@ -34,6 +42,15 @@ export default function Login() {
     }
     
   }
+
+  async function handleCreateAccount(){
+    setIsCreateAccount(true);
+  }
+
+  function handlePopUpClose(){
+    setIsCreateAccount(false);
+  }
+
     
   return (
     <div className="home-container">
@@ -74,14 +91,12 @@ export default function Login() {
             <hr />
 
             <div className="create-container">
-              <Popup trigger={<button className="create-new-account">Create new account</button>} modal nested>
-                <CreateAccountPop />
-              </Popup>
+              <button className="create-new-account" onClick={handleCreateAccount}>Create new account</button>
             </div>
           
           </div>
           <div className="create-page-container">
-            <div className="create-a-page"><b>Create a Page</b> for a celebrity, brand or business.</div>
+            <div className="create-a-page" ><b>Create a Page</b> for a celebrity, brand or business.</div>
           </div>
           
         </div>
@@ -89,7 +104,7 @@ export default function Login() {
       </div>
 
 
-
+      {(isCreateAccount) ? <CreateAccountPop closeCreate={handlePopUpClose}/> : ""}
 
 
     </div>

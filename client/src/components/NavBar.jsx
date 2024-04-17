@@ -8,7 +8,7 @@ import { CgMenuGridO } from "react-icons/cg";
 import { BiMessageRoundedDetail } from "react-icons/bi";
 import { FaRegBell } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
-import '../navbar.css';
+import '../styles/navbar.css';
 
 
 export default function NavBar() {
@@ -18,7 +18,7 @@ export default function NavBar() {
 
       <div className="flex items-center justify-evenly">
         <img className="size-8 cursor-pointer mr-2" src="./fb_logo.png" alt="..." />
-        <input className="rounded-full p-1" type="text" placeholder="Search Facebook"/>
+        <input className="rounded-full p-1" type="text" placeholder="Search Fakebook"/>
       </div>
 
       <div className="flex items-center h-full w-[50%] justify-center">
