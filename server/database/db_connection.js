@@ -37,11 +37,8 @@ export async function getPosts(){
   return posts; 
 }
 
-
-export async function createPost(post_id, user_id, content){
-  let timestamp;
+export async function createPost(post_id, user_id, content){ 
   let date = new Date();
-  timestamp = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
   const [result] = await pool.query(`INSERT INTO fakebook.post (post_id, content, create_date, user_id) VALUES (?,?,?,?)`, [post_id, content, date, user_id])
   return result.affectedRows;
 }
@@ -51,9 +48,27 @@ export async function getLikes(){
   return likes;
 }
 
-export async function sendLike(user_id, post_id){
+export async function addLike(user_id, post_id){
   const [result] = await pool.query(`INSERT INTO fakebook.likes (likes_user_id, likes_post_id) VALUES (?,?)`, [user_id, post_id]);
   return result.affectedRows;
 }
+
+export async function removeLike(user_id, post_id){
+  const [result] = await pool.query(`DELETE FROM fakebook.likes WHERE likes_user_id = ? AND likes_post_id = ?`, [user_id, post_id]);
+  return result;
+}
+
+export async function getComments(){
+  const [comments] = await pool.query("SELECT * FROM fakebook.comment");
+  return comments;
+}
+
+export async function createComment(post_id, user_id, content){
+  let date = new Date();
+  const [result] = await pool.query("INSERT INTO fakebook.comment (comment_user_id, comment_post_id, comment_content, comment_create_date) VALUES (?,?,?,?)", [user_id, post_id, content, date]);
+  return result.affectedRows;
+}
+
+
 
 

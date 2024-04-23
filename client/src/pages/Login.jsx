@@ -15,6 +15,7 @@ export default function Login() {
   const navigateTo = useNavigate();
 
   async function handleSubmit(e){
+    localStorage.clear();
     e.preventDefault();
     
     try{

@@ -13,7 +13,6 @@ export default function Home(){
   const [isCreatePost, setIsCreatePost] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
-
   useEffect(() => {
     const fetchCurrentUser = () => {
       const loggedInUser = localStorage.getItem('currentUser');
@@ -37,19 +36,21 @@ export default function Home(){
       }
 
       const postData = await response.json();
+      
       postData.sort((a, b) => new Date(b.post_age) - new Date(a.post_age));
       setPosts(postData);
+      
     } catch (e){
       console.error("Error fetching: " + e);
     }
-  }
 
-  
+    
+  } 
   
   useEffect(() => {
     fetchPosts();
   }, []);
-  
+
   async function handlePostCreation(){
     setIsCreatePost(true);
   }
@@ -79,7 +80,7 @@ export default function Home(){
     }
   }
 
-  console.log(currentUser);
+
   
   return (
     <div className="static h-[100vh]">
@@ -88,7 +89,7 @@ export default function Home(){
         <CreatePost handlePostCreation={handlePostCreation} user={currentUser}/>
         <div className="flex flex-col mt-10">
           {posts.map((post) =>{
-            return <Post key={post.post_id} post={post}/>;
+            return <Post key={post.post_id} post={post} currentUser={currentUser}/>;
           })}
         </div>
         

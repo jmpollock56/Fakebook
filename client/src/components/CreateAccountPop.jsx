@@ -29,8 +29,9 @@ export default function CreateAccountPop({ closeCreate }) {
       });
 
       if(response.ok){
-        console.log("account created!");
+        
         closeCreate();
+        alert('Account created. You may now log in!');
       }
       
     

@@ -1,0 +1,41 @@
+.add-comment{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.lower-post-container{
+  margin-top: 10px;
+}
+
+.comment-section{
+  margin-bottom: 10px;
+}
+
+.comment-entry{
+  border-radius: 15px;
+  box-sizing: border-box;
+  padding: 10px;
+  width: 95%;
+  height: 30px;
+  background-color: rgba(128, 128, 128, 0.527);
+  overflow-wrap: break-word;
+  color: white;
+}
+
+.comment-entry::placeholder{
+  color: white;
+}
+
+.comment-entry:focus{
+  outline: none;
+}
+
+.post-content{
+  white-space: pre;
+  overflow-wrap: break-word;
+  width: 100%;
+}
+
+
+

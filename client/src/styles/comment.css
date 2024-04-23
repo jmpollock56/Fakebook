@@ -1,0 +1,70 @@
+.comment-container{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.comment-upper-container{
+  display: flex;
+  flex-direction: row;
+}
+
+.comment-main-container{
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  box-sizing: content-box;
+  padding: 8px 10px;
+  width: 90%;
+  background-color: white;
+}
+
+.comment-lower-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100px;
+  margin-left: 45px;
+}
+
+.comment-age{
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.like-btn{
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.like-btn:hover{
+  text-decoration: underline;
+}
+
+.reply-btn{
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.reply-btn:hover{
+  text-decoration: underline;
+}
+
+.pfp{
+  width: 32px;
+  height: 32px;
+  border-radius: 100px;
+  margin-right: 5px;
+}
+
+.comment-user-name{
+  font-size: 12px;
+}
+
+.comment-content{
+  overflow-wrap: break-word;
+  font-size: 15px;
+  width: 100%;
+}
+

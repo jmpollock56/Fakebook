@@ -29,7 +29,7 @@ export default function CreatePostPopUp({ close, user, updatePosts }) {
         </div>
 
         <form onSubmit={handlePostCreation} method="post" className="post-form">
-          <textarea onChange={(e) =>{setPostContent(e.target.value)}} name="post" value={postContent} cols="30" rows="10" className="post-content-area" placeholder="What's on your mind?"></textarea>
+          <textarea onChange={(e) =>{setPostContent(e.target.value)}} name="post" value={postContent} cols="30" rows="10" className="post-content-area" placeholder="What's on your mind?" autoFocus></textarea>
           <input type="submit" value="Post" className="submit-post"/>
         </form>
       </div>
