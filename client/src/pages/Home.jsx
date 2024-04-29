@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import NavBar from "../components/NavBar";
 import CreatePost from "../components/CreatePost";
 import Post from "../components/Post";
 import CreatePostPopUp from "../components/CreatePostPopUp";
+import "../styles/Home.css";
 
-
-
+export const UserContext = createContext();
 
 export default function Home(){
   
   const [posts, setPosts] = useState([]);
   const [isCreatePost, setIsCreatePost] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  
+  
+  
 
   useEffect(() => {
     const fetchCurrentUser = () => {
@@ -52,12 +55,9 @@ export default function Home(){
   }, []);
 
   async function handlePostCreation(){
-    setIsCreatePost(true);
+    setIsCreatePost(!isCreatePost);
   }
 
-  function handlePopUpClose(){
-    setIsCreatePost(false);
-  }
 
   async function updatePosts(newPost){
     try{
@@ -80,22 +80,26 @@ export default function Home(){
     }
   }
 
-
   
-  return (
-    <div className="static h-[100vh]">
-      <NavBar />
-      <div className="relative flex flex-col w-[600px] h-full mx-auto top-20 box-content">
-        <CreatePost handlePostCreation={handlePostCreation} user={currentUser}/>
-        <div className="flex flex-col mt-10">
-          {posts.map((post) =>{
-            return <Post key={post.post_id} post={post} currentUser={currentUser}/>;
-          })}
-        </div>
-        
-      </div>
-      {(isCreatePost) ? <CreatePostPopUp close={handlePopUpClose} user={currentUser} updatePosts={updatePosts}/> : ""}
+  return (currentUser) ? (
+    <div className="static h-[100%]">
+      <UserContext.Provider value={currentUser}>
+        <NavBar />
       
+        <div className="relative flex flex-col w-[600px] h-full mx-auto top-20 box-content">
+          <CreatePost handlePostCreation={handlePostCreation} user={currentUser}/>
+          <div className="flex flex-col mt-10">
+            {posts.map((post) =>{
+              return <Post key={post.post_id} post={post} currentUser={currentUser}/>;
+            })}
+          </div>
+          
+        </div>
+      
+        {(isCreatePost) ? <CreatePostPopUp close={handlePostCreation} user={currentUser} updatePosts={updatePosts}/> : ""}
+    
+      
+        </UserContext.Provider>
     </div>
-  );
+  ) : "no currentUser, please log in";
 }

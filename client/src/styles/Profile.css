@@ -1,0 +1,289 @@
+.complete-container{
+  position: static;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  
+}
+
+.full-profile-container{
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 45px;
+  width: 100vw;
+  
+}
+
+.top-profile-container{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: skyblue;
+}
+
+.cover-photo-container{
+  position: relative;
+  background-color: black;
+  width: 1200px;
+  height: 450px;
+  border-radius: 5px;
+}
+
+.profile-info-container{
+  display: flex;
+  width: 1200px;
+  justify-content: space-between;
+  
+}
+
+.inner-profile{
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  left: 20px;
+  
+}
+
+.full-info-container{
+  display: flex;
+  position: relative;
+  bottom: 35px;
+  width: 1200px;
+  
+}
+
+.profile-picture img{
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+}
+
+.profile-picture{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 175px;
+  height: 175px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.name-and-friends-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  position: relative;
+  top: 40px;
+  height: 150px;
+  
+}
+
+.edit-cover-btn{
+  position: relative;
+  background-color: white;
+  width: 150px;
+  height: 30px;
+  left: 1025px;
+  top: 400px;
+  
+}
+
+.name{
+  font-weight: 700;
+  font-size: 30px;
+}
+
+.friends{
+  font-size: 15px;
+  font-weight: 500;
+
+}
+
+.friend-icons-container{
+  display: flex;
+  flex-direction: row;
+
+}
+
+.friend-circle{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.friend-circle img{
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+
+.edit-profile-btn{
+  position: relative;
+  right: 40px;
+  top: 150px;
+  background-color: whitesmoke;
+  height: 30px;
+  width: 100px;
+  border-radius: 5px;
+}
+
+.top-profile-container hr{
+  border-top: 2px solid black;
+  width: 1200px;
+}
+
+.tab-options{
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  right: 460px;
+  width: 15%;
+  margin-top: 2px;
+}
+
+.option{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: content-box;
+  padding: 10px;
+  width: 60px;
+  height: 40px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.option:hover{
+  background-color: gray;
+}
+
+.bottom-profile-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  margin-top: 10px;
+
+}
+
+.lower-profile-info{
+  width: 550px;
+  color: white;
+  font-weight: 500;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.intro-container{
+  background-color: skyblue;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.intro-item{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.profile-post-feed{
+  width: 700px;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.lives-in-location{
+  margin-left: 5px;
+}
+
+.photos-container{
+  width: 100%;
+  border-radius: 10px;
+  background-color: skyblue;
+}
+
+.top-photos{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+  box-sizing:content-box;
+}
+
+.see-all-photos-btn{
+  color: rgb(81, 81, 253);
+}
+
+.photo-display-container{
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 10px;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.display-photo{
+  height: 150px;
+}
+
+.display-photo-top-left{
+ height: 150px;
+ border-radius: 10px 0px 0px 0px;
+}
+
+.display-photo-top-right{
+  height: 150px;
+  border-radius: 0px 10px 0px 0px;
+}
+
+.display-photo-bottom-left{
+  height: 150px;
+  border-radius: 0px 0px 0px 10px;
+}
+
+.display-photo-bottom-right{
+  height: 150px;
+  border-radius: 0px 0px 10px 0px;
+}
+
+.friends-container{
+  width: 100%;
+  margin-top: 10px;
+  background-color: skyblue;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.top-friends{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.amount-of-friends{
+  font-weight: 300;
+}
+
+.see-all-container button{
+  color: rgb(81, 81, 253);
+}
+
+.friend-main-container{
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-content: space-between;
+  padding: 5px;
+}

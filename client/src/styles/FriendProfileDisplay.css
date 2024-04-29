@@ -1,0 +1,14 @@
+.friend-container{
+  margin-bottom: 10px;
+}
+
+.friend-container img{
+  height: 150px;
+  width: 150px;
+  border-radius: 10px;
+}
+
+.friend-name{
+  font-size: 12px;
+
+}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Comment from "./Comment";
 import { AiOutlineLike } from "react-icons/ai";
 import { BiLogIn } from "react-icons/bi";
+
 import "../styles/post.css";
 
 export default function Post({ post, currentUser }) {
@@ -10,6 +11,7 @@ export default function Post({ post, currentUser }) {
   const [likes, setLikes] = useState(post.likes);
   const [comments, setComments] = useState(post.postComments);
   const [commentContent, setCommentContent] = useState("");
+  const [postAge, setPostAge] = useState("");
   
 
   
@@ -21,7 +23,12 @@ export default function Post({ post, currentUser }) {
         return;
       }
     }
+    
   },[]);
+
+  useEffect(() => {
+    createPostAge();
+  });
 
   async function handleLike() {
     if(!isLiked){
@@ -83,10 +90,31 @@ export default function Post({ post, currentUser }) {
       console.error('Error:', error);
     }
   }
+
+  function createPostAge(){
+    let now = new Date();
+    
+    let postDate = new Date(post.post_age);
+
+
+    if((now.getDate() - postDate.getDate()) > 0){
+      let age = `${now.getDate() - postDate.getDate()}d`;
+      setPostAge(age);
+
+    } else if((now.getHours() - postDate.getHours()) < 1){
+      let age = `${now.getMinutes() - postDate.getMinutes()}m`
+      setPostAge(age);
+
+    } else {
+      let age = `${now.getHours() - postDate.getHours()}h`;
+    
+      setPostAge(age);
+    }
+  }
   
 
   return (
-    <div className="flex flex-col bg-sky-500 rounded-md box-content p-4 shadow-md mb-5">
+    <div className="flex flex-col bg-sky-300 rounded-md box-content p-4 shadow-md mb-5">
 
       <div className="flex flex-row justify-between">
 
@@ -96,14 +124,16 @@ export default function Post({ post, currentUser }) {
 
           <div className="flex flex-col items-start">
             <div className="font-semibold">{post.user_name}</div>
-            <div className="static text-xs ">2d</div>
+            <div className="static text-xs ">{postAge}</div>
           </div>
 
         </div>
         <div className="cursor-pointer">...</div>
       </div>
-
-      <div className="post-content">{post.post_content}</div>
+      <div className="post-content-container">
+        <div className="post-content">{post.post_content}</div>
+      </div>
+      
 
       <div className="flex flex-row justify-between mt-2 mb-2">
         <div className="flex w-7 justify-between items-center">
@@ -126,8 +156,8 @@ export default function Post({ post, currentUser }) {
       <div className="lower-post-container">
         
         <div className="comment-section">
-          {comments.map((comment) => {
-            return <Comment key={comment.comment_post_id} comment={comment}/>
+          {comments.map((comment, i) => {
+            return <Comment key={i} comment={comment}/>
           })}
         </div>
         <form onSubmit={handleComment} className="add-comment">

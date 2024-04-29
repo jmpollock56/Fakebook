@@ -31,10 +31,15 @@
   outline: none;
 }
 
+.post-content-container{
+  display: flex;
+  flex-direction: column;
+}
+
 .post-content{
-  white-space: pre;
   overflow-wrap: break-word;
-  width: 100%;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 
