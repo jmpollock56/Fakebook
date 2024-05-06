@@ -3,6 +3,7 @@ import NavBar from "../components/NavBar";
 import CreatePost from "../components/CreatePost";
 import Post from "../components/Post";
 import CreatePostPopUp from "../components/CreatePostPopUp";
+import ProfileHoverPopUp from "../components/ProfileHoverPopUp";
 import "../styles/Home.css";
 
 export const UserContext = createContext();
@@ -12,9 +13,7 @@ export default function Home(){
   const [posts, setPosts] = useState([]);
   const [isCreatePost, setIsCreatePost] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-  
-  
-  
+
 
   useEffect(() => {
     const fetchCurrentUser = () => {
@@ -52,6 +51,7 @@ export default function Home(){
   
   useEffect(() => {
     fetchPosts();
+    
   }, []);
 
   async function handlePostCreation(){
@@ -81,6 +81,7 @@ export default function Home(){
   }
 
   
+  
   return (currentUser) ? (
     <div className="static h-[100%]">
       <UserContext.Provider value={currentUser}>
@@ -101,5 +102,6 @@ export default function Home(){
       
         </UserContext.Provider>
     </div>
+    
   ) : "no currentUser, please log in";
 }

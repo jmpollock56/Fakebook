@@ -69,6 +69,23 @@ export async function createComment(post_id, user_id, content){
   return result.affectedRows;
 }
 
+export async function getFriends(){
+  const [friends] = await pool.query("SELECT * FROM fakebook.friends");
+  return friends;
+}
+
+export async function addFriendship(currentUser, selectedUser){
+  let date = new Date();
+  const [result] = await pool.query("INSERT INTO fakebook.friends (user1_id, user2_id, create_date) VALUES (?,?,?)", [currentUser, selectedUser, date]);
+  return result.affectedRows;
+}
+
+export async function removeFriendship(currentUser, selectedUser){
+  const [result] = await pool.query("DELETE FROM fakebook.friends WHERE (user1_id = ? AND user2_id = ?) OR (user1_id = ? AND user2_id = ?)", [currentUser, selectedUser, selectedUser, currentUser]);
+  
+  return result.affectedRows;
+}
+
 
 
 

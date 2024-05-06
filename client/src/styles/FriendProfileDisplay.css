@@ -1,5 +1,6 @@
 .friend-container{
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .friend-container img{

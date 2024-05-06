@@ -1,0 +1,20 @@
+.pop-up-container{
+  position: relative;
+  height: 200px;
+  width: 250px;
+  
+}
+
+.top-id-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.top-id-container > img{
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  
+}

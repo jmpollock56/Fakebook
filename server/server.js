@@ -1,13 +1,13 @@
 import express from "express"
 import bodyParser from "body-parser"
 import { v4 as uuidv4 } from "uuid";
-import { getUser, getUsers, createUser, getPosts, createPost, getLikes, addLike, removeLike, getComments, createComment } from "./database/db_connection.js";
+import { getUser, getUsers, createUser, getPosts, createPost, getLikes, addLike, removeLike, getComments, createComment, getFriends, addFriendship, removeFriendship } from "./database/db_connection.js";
 
 const app = express();
-let currentUser = {};
+
 
 app.use(bodyParser.json());
-
+let currentUser = {};                                      
 function createCompletePosts(users, posts, likes, comments){
   let objectPosts = [];
 
@@ -62,21 +62,55 @@ function createCompletePosts(users, posts, likes, comments){
   return fullPosts;
 }
 
-function createCompleteUsers(currentUser, likes){
+function createCompleteUsers(currentUser, likes, friends){
   let currentUserLikes = [];
+  let currentUserFriends = [];
 
   for(let i = 0; i < likes.length; i++){
-    
-    if(currentUser.user_id === likes[i].likes_user_id){
-      
+    if(currentUser.user_id === likes[i].likes_user_id){ 
        currentUserLikes.push(likes[i]);
+    }
+  }
+
+  for(let i = 0; i < friends.length; i++){
+    if(currentUser.user_id === friends[i].user1_id){
+      currentUserFriends.push(friends[i].user2_id);
+    } else if(currentUser.user_id === friends[i].user2_id){
+      currentUserFriends.push(friends[i].user1_id);
     }
   }
 
 
 
-  return {...currentUser, userLikes: currentUserLikes};
+  return {...currentUser, userLikes: currentUserLikes, userFriends: currentUserFriends};
 }
+
+async function createUserWithFriends(selectedUser){
+  let selectedUserFriends = [];
+  const friends = await getFriends();
+  const users = await getUsers();
+
+  for(let i = 0; i < friends.length; i++){
+    if(selectedUser.user_id === friends[i].user1_id){
+      selectedUserFriends.push({ user_id: friends[i].user2_id });
+
+    } else if(selectedUser.user_id === friends[i].user2_id){
+      selectedUserFriends.push({ user_id : friends[i].user1_id });
+    }
+  }
+
+  for(let i = 0; i < selectedUserFriends.length; i++){
+    for(let j = 0; j< users.length; j++){
+      if(selectedUserFriends[i].user_id == users[j].user_id){
+        selectedUserFriends[i].name = `${users[j].first_name} ${users[j].last_name}`;
+        console.log(selectedUserFriends[i]);
+      }
+    }
+  }
+  
+  return {...selectedUser, userFriends: selectedUserFriends};
+}
+
 
 app.get('/api/posts', async (req, res) => {
   const allUsers = await getUsers();
@@ -95,6 +129,7 @@ app.post('/api/login', async (req, res) => {
   const {emailOrPhone, password} = req.body;
   const users = await getUsers();
   const likes = await getLikes();
+  const friends = await getFriends();
   
   let isUser = false;
 
@@ -108,7 +143,7 @@ app.post('/api/login', async (req, res) => {
     }
   }
 
-  const completeUser = createCompleteUsers(currentUser, likes);
+  const completeUser = createCompleteUsers(currentUser, likes, friends);
   
   
   if(isUser){
@@ -182,6 +217,82 @@ app.post('/api/posts/comment/create', async (req, res) => {
     affectedRows < 1 ? res.status(400).json({ message: 'Failed to create post' , newPost}) : res.status(201).json({ message: 'Post created successfully' }); 
   } else {
     console.error("comment is null in server");
+  }
+})
+
+app.post('/api/user/profile', async (req, res) => {
+  const allUsers = await getUsers();
+  
+  
+  if(req.body){
+    const { user_id } = req.body;
+    let user = {};
+    
+    for(let i = 0; i < allUsers.length; i++){
+      if(allUsers[i].user_id == user_id){
+        user = allUsers[i];
+      }
+    }
+
+    let selectedUser = await createUserWithFriends(user);
+    
+    res.status(200).json({selectedUser: selectedUser});
+    
+  } else {
+    res.status(401).json({message: "profile load error"});
+  }
+  
+  
+
+  
+})
+
+app.post('/api/friend/add', async (req, res) => {
+  const currentFriends = await getFriends();
+  
+  if(req.body){
+    const {currentUser, selectedUser} = req.body;
+
+    for(let i = 0; i < currentFriends.length; i++){
+      if(((currentUser === currentFriends[i].user1_id) && (selectedUser === currentFriends[i].user2_id)) || ((currentUser === currentFriends[i].user2_id) && (selectedUser === currentFriends[i].user1_id))){
+        console.log("friendship already there");
+        return;
+      } else {
+        
+      
+      let affectedRows = await addFriendship(currentUser, selectedUser);
+         
+      
+        if(affectedRows === 1){
+          //send a new version of the selectedUser that has the updated friends list.
+          res.status(200).json({message: 'friend added'});
+        } else {
+          res.status(401).json({message: 'friend not added'});
+        }
+    
+        return affectedRows;
+
+      }
+    }
+
+   
+  }
+})
+
+app.post('/api/friend/remove', async (req, res) => {
+  if(req.body){
+    const {currentUser, selectedUser} = req.body;
+
+    let affectedRows = await removeFriendship(currentUser, selectedUser);
+    console.log(affectedRows);
+
+    if(affectedRows === 1){
+      res.status(200).json({message: 'friend removed'});
+    } else {
+      res.status(401).json({message: 'friend not removed'});
+    }
+
+    return affectedRows;
   }
 })
 

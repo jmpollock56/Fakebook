@@ -12,7 +12,7 @@
   flex-direction: column;
   position: relative;
   top: 45px;
-  width: 100vw;
+  width: 100%;
   
 }
 
@@ -287,3 +287,29 @@
   justify-content: space-between;
   padding: 5px;
 }
+
+.no-post{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 700px;
+  background-color: skyblue;
+  height: 200px;
+  border-radius: 10px;
+  margin-top: 10px;
+  padding: 10px;
+  color: white;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.add-friend-btn{
+  position: relative;
+  right: 40px;
+  top: 150px;
+  background-color: whitesmoke;
+  height: 30px;
+  width: 100px;
+  border-radius: 5px;
+}
+

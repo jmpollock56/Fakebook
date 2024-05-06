@@ -11,6 +11,7 @@ export default function CreatePostPopUp({ close, user, updatePosts }) {
     e.preventDefault();
     const newPost = {post_id: post_id, content: postContent, user_id: user.user_id};
     updatePosts(newPost);
+    close();
   }
 
  

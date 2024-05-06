@@ -36,7 +36,7 @@ export default function ProfileIconDropdown(){
   return (
     <div className="drop-down-container">
 
-      <div className="main-profile" onClick={()=>{navigateTo('/profile')}}>
+      <div className="main-profile" onClick={()=>{navigateTo(`/user/${currentUser.user_id}`)}}>
         <img className="size-8 rounded-full mr-2" src="https://practicaltyping.com/wp-content/uploads/2019/06/Hinata.PNG.png" alt="profile" />
         <div className="profile-name">{`${currentUser.first_name} ${currentUser.last_name}`}</div>
       </div>

@@ -27,7 +27,7 @@ export default function NavBar() {
     <nav className="flex justify-between items-center w-[98%] mx-auto">
 
       <div className="flex items-center justify-evenly">
-        <img className="size-8 cursor-pointer mr-2" src="./fb_logo.png" alt="..." />
+        <img className="size-8 cursor-pointer mr-2" src="../../public/fb_logo.png" alt="..." />
         <input className="rounded-full p-1" type="text" placeholder="Search Fakebook"/>
       </div>
 
@@ -71,7 +71,7 @@ export default function NavBar() {
         
 
         <div className="relative ml-2 cursor-pointer" onClick={() => {setIsDropDownMenu(!isDropDownMenu)}}>
-          <img className="size-8 rounded-full" src="https://practicaltyping.com/wp-content/uploads/2019/06/Hinata.PNG.png" alt="profile" />
+          <img className="size-8 rounded-full" src="https://i.stack.imgur.com/l60Hf.png" alt="profile" />
           <div className="absolute bottom-0 right-0 rounded-full bg-white">
             <IoIosArrowDown className="h-3 w-3"/>
           </div>

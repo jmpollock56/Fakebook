@@ -8,10 +8,11 @@ export default function Comment({ comment }) {
   useEffect(() => {
     const now = new Date();
     const commentDate = new Date(comment.comment_create_date);
+    let timeDiff = now.getTime() - commentDate.getTime();
+    let daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
     
-    
-    if((now.getDate() - commentDate.getDate()) > 0){
-      let age = `${now.getDate() - commentDate.getDate()}d`;
+    if(daysDiff > 0){
+      let age = `${daysDiff}d`;
       setCommentAge(age);
     } else if((now.getHours() - commentDate.getHours()) < 1){
       let age = `${now.getMinutes() - commentDate.getMinutes()}m`
