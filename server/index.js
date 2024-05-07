@@ -111,6 +111,9 @@ async function createUserWithFriends(selectedUser) {
   return { ...selectedUser, userFriends: selectedUserFriends };
 }
 
+app.use('/', (req, res) => {
+  res.send("server is running");
+})
 
 app.get('/api/posts', async (req, res) => {
   const allUsers = await getUsers();
