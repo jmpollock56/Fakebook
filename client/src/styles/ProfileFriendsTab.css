@@ -1,0 +1,21 @@
+.friend-tab-container{
+  background-color: skyblue;
+  width: 1200px;
+  box-sizing: content-box;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.friend-tab-container > h2 {
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.friends-main-container{
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 20px;
+  justify-content: space-between;
+  
+}

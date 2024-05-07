@@ -29,6 +29,7 @@ export default function Home(){
     fetchCurrentUser();
   },[]);
 
+  
   async function fetchPosts(){
     try{
       const response = await fetch('/api/posts');
@@ -50,8 +51,7 @@ export default function Home(){
   } 
   
   useEffect(() => {
-    fetchPosts();
-    
+    fetchPosts(); 
   }, []);
 
   async function handlePostCreation(){
@@ -70,7 +70,6 @@ export default function Home(){
       if(response.ok){
         console.log('ok');
         fetchPosts();
-        handlePopUpClose();
       } else {
         console.log('oops');
       }

@@ -39,6 +39,7 @@ export async function getPosts(){
 
 export async function createPost(post_id, user_id, content){ 
   let date = new Date();
+  console.log(date);
   const [result] = await pool.query(`INSERT INTO fakebook.post (post_id, content, create_date, user_id) VALUES (?,?,?,?)`, [post_id, content, date, user_id])
   return result.affectedRows;
 }

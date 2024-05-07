@@ -29,6 +29,8 @@
 
 .comment-entry:focus{
   outline: none;
+  background-color: rgba(128, 128, 128, 0.171);
+  height: 50px;
 }
 
 .post-content-container{

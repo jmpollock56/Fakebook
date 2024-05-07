@@ -27,7 +27,7 @@ export default function NavBar() {
     <nav className="flex justify-between items-center w-[98%] mx-auto">
 
       <div className="flex items-center justify-evenly">
-        <img className="size-8 cursor-pointer mr-2" src="../../public/fb_logo.png" alt="..." />
+        <img onClick={() => {navigateTo('/home')}}  className="size-8 cursor-pointer mr-2" src="../../public/fb_logo.png" alt="..." />
         <input className="rounded-full p-1" type="text" placeholder="Search Fakebook"/>
       </div>
 

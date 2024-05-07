@@ -4,6 +4,7 @@ import CreatePost from "../components/CreatePost";
 import CreatePostPopUp from "../components/CreatePostPopUp";
 import Post from "../components/Post";
 import FriendProfileDisplay from "../components/FriendProfileDisplay";
+import ProfileFriendsTab from "../components/ProfileFriendsTab";
 import { GiHouse } from "react-icons/gi";
 import "../styles/Profile.css";
 import { useNavigate, useParams } from "react-router-dom";
@@ -19,6 +20,7 @@ export default function Profile() {
   const [selectedUserFriends, setSelectedUserFriends] = useState([]);
   const [friendBtnText, setFriendBtnText] = useState("Add Friend");
   const [isFriend, setIsFriend] = useState(false);
+  const [showFriendsTab, setShowFriendsTab] = useState(false);
 
   const { user_id } = useParams();
   const navigateTo = useNavigate();
@@ -40,30 +42,30 @@ export default function Profile() {
   }, []);
 
   function findFriend() {
-   console.log(selectedUserFriends);
+     
+    setIsFriend(false);
     for (let i = 0; i < selectedUserFriends.length; i++) {
-      
-      if (currentUser.user_id === selectedUserFriends[i].user_id) {
-        console.log("findFriend --- setting to true");
-        setIsFriend(true);
 
+      if (currentUser.user_id === selectedUserFriends[i].user_id) {
+        setIsFriend(true);
+        
       } else {
-        console.log("findFriend --- setting to false");
         setIsFriend(false);
+        
       }
 
     }
-    
+
     if (!isFriend) {
       setFriendBtnText("Add Friend");
-     
+
     } else {
       setFriendBtnText("Friends!");
 
     }
   }
 
-  function checkIfLoggedInUserProfile() { 
+  function checkIfLoggedInUserProfile() {
     if (selectedUser.user_id === currentUser.user_id) {
       setIsLoggedInUser(true);
 
@@ -73,59 +75,109 @@ export default function Profile() {
   }
 
   async function toFriendProfile(friendId) {
+    setShowFriendsTab(false);
     navigateTo(`/user/${friendId}`);
   }
 
   async function toggleFriend() {
-  console.log(isFriend + "before fully running toggleFriend");
-    if(!isFriend){
+    
+    if (!isFriend) {
+      
       try {
-
+        
         const response = await fetch('/api/friend/add', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({currentUser: currentUser.user_id, selectedUser: selectedUser.user_id }),
+          body: JSON.stringify({ currentUser: currentUser.user_id, selectedUser: selectedUser.user_id }),
         });
-  
-        if(response.ok){
-          console.log(isFriend + " --Before setting friend to true from false");
+
+        if (response.ok) {
+          console.log('add');
+          
           setIsFriend(currentIsFriend => !currentIsFriend);
-         
+
         }
-        
+
       } catch (error) {
         console.error(error);
       }
-  } else {
+    } else {
+      
+      try {
+        
+        const response = await fetch('/api/friend/remove', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ currentUser: currentUser.user_id, selectedUser: selectedUser.user_id }),
+        });
+
+        if (response.ok) {
+          console.log('remove');
+          setIsFriend(false);
+        }
+
+      } catch (error) {
+        console.error(error);
+      }
+
+    }
+
+
+  }
+
+
+  function friendHoverText() { // work on pls
+    setFriendBtnText("Remove?");
+  }
+
+  async function handlePostCreation(){
+    setIsCreatePost(!isCreatePost);
+  }
+
+  async function fetchPosts(){
     try{
+      const response = await fetch('/api/posts');
 
-      const response = await fetch('/api/friend/remove', {
+      if(!response.ok){
+        throw new Error('Network response was no ok');
+      }
+
+      const postData = await response.json();
+      
+      postData.sort((a, b) => new Date(b.post_age) - new Date(a.post_age));
+      setUserPosts(postData);
+      
+    } catch (e){
+      console.error("Error fetching: " + e);
+    }
+
+    
+  } 
+
+  async function updatePosts(newPost){
+    try{
+      const response = await fetch('/api/posts/create', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({currentUser: currentUser.user_id, selectedUser: selectedUser.user_id }),
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(newPost)
       });
-
+      
       if(response.ok){
-        console.log(isFriend + " --Before setting friend to false from true");
-        setIsFriend(currentIsFriend => !currentIsFriend);
+        console.log('ok');
+        fetchPosts();
+        handlePopUpClose();
+      } else {
+        console.log('oops');
       }
       
     } catch (error){
-      console.error(error); 
+      console.error("SUCH DEVASTATION!!!!!: " + error);
     }
-    
-  }
-
-  console.log(isFriend + "after fully running toggleFriend");
-}
-
-  function friendHoverText(){ // work on pls
-    setFriendBtnText("Remove?");
   }
 
   useEffect(() => {
     const fetchInitUserProfile = async () => {
-      console.log('fetchInitUserProfile');
+       
       try {
         const response = await fetch('/api/user/profile', {
           method: 'POST',
@@ -138,20 +190,20 @@ export default function Profile() {
 
           const userProfileData = await response.json();
           const userFromDB = userProfileData.selectedUser;
-  
-  
+
+          
           setSelectedUser(userFromDB);
           setSelectedUserFriends(userFromDB.userFriends);
 
-          
+
           findFriend();
           checkIfLoggedInUserProfile();
-          console.log(isFriend + " in respon fetchUserProfile");
+
         }
-        console.log(isFriend + " during fetchUserProfile");
-       
+
+
       } catch (error) {
-        console.error('error retrieving user profile info');
+
       }
     }
     fetchInitUserProfile();
@@ -236,91 +288,92 @@ export default function Profile() {
 
           <hr />
           <div className="tab-options">
-            <div className="option">Posts</div>
+            <div className="option" onClick={() => { setShowFriendsTab(false) }}>Posts</div>
             <div className="option">About</div>
-            <div className="option">Friends</div>
+            <div className="option" onClick={() => { setShowFriendsTab(true) }}>Friends</div>
             <div className="option">Photos</div>
           </div>
         </div>
-
-        <div className="bottom-profile-container">
-          <div className="lower-profile-info">
-            <div className="intro-container">
-              <h2>Intro</h2>
-              <hr />
-              <div className="intro-item">
-                <GiHouse />
-                <div className="lives-in-location">Lives in Charlotte, North Carolina</div>
-              </div>
-              <div className="intro-item">
-                <div className="lives-from-location">From Leesburg, Georgia</div>
-              </div>
-              <div className="intro-item">
-
-                <div className="joined-location">Joined in 2024</div>
-              </div>
-
-            </div>
-            <div className="photos-container">
-              <div className="top-photos">
-                <h2>Photos</h2>
-                <button className="see-all-photos-btn">See all photos</button>
-              </div>
-              <div className="photo-display-container">
-                <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo-top-left" />
-                <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo" />
-                <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo-top-right" />
-                <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo" />
-                <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo" />
-                <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo" />
-                <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo-bottom-left" />
-                <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo" />
-                <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo-bottom-right" />
-              </div>
-            </div>
-
-            <div className="friends-container">
-              <div className="top-friends">
-                <div className="top-left-friends">
-                  <h2>Friends</h2>
-                  <div className="amount-of-friends">{`${selectedUserFriends.length} friends`}</div>
+        {(showFriendsTab) ? <ProfileFriendsTab friends={selectedUserFriends} toFriendProfile={toFriendProfile} currentUser={currentUser}/>
+          : <div className="bottom-profile-container">
+            <div className="lower-profile-info">
+              <div className="intro-container">
+                <h2>Intro</h2>
+                <hr />
+                <div className="intro-item">
+                  <GiHouse />
+                  <div className="lives-in-location">Lives in Charlotte, North Carolina</div>
                 </div>
+                <div className="intro-item">
+                  <div className="lives-from-location">From Leesburg, Georgia</div>
+                </div>
+                <div className="intro-item">
 
-                <div className="see-all-container">
-                  <button>See all friends</button>
+                  <div className="joined-location">Joined in 2024</div>
                 </div>
 
               </div>
+              <div className="photos-container">
+                <div className="top-photos">
+                  <h2>Photos</h2>
+                  <button className="see-all-photos-btn">See all photos</button>
+                </div>
+                <div className="photo-display-container">
+                  <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo-top-left" />
+                  <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo" />
+                  <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo-top-right" />
+                  <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo" />
+                  <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo" />
+                  <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo" />
+                  <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo-bottom-left" />
+                  <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo" />
+                  <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo-bottom-right" />
+                </div>
+              </div>
 
-              <div className="friend-main-container">
+              <div className="friends-container">
+                <div className="top-friends">
+                  <div className="top-left-friends">
+                    <h2>Friends</h2>
+                    <div className="amount-of-friends">{`${selectedUserFriends.length} friends`}</div>
+                  </div>
 
-                {selectedUserFriends.map((friend, i) => {
-                  if (i < 9) {
-                    return <FriendProfileDisplay
-                      key={i}
-                      friend={friend}
-                      setSelectedUser={setSelectedUser}
-                      toFriendProfile={() => { toFriendProfile(friend.user_id) }} />
-                  }
+                  <div className="see-all-container">
+                    <button onClick={() =>{ setShowFriendsTab(true) }}>See all friends</button>
+                  </div>
 
-                })}
+                </div>
+
+                <div className="friend-main-container">
+
+                  {selectedUserFriends.map((friend, i) => {
+                    if (i < 9) {
+                      return <FriendProfileDisplay
+                        key={i}
+                        friend={friend}
+                        setSelectedUser={setSelectedUser}
+                        toFriendProfile={() => { toFriendProfile(friend.user_id) }} />
+                    }
+
+                  })}
+                </div>
               </div>
             </div>
-          </div>
 
-          {(userPosts.length > 0) ?
-            <div className="profile-post-feed">
+            {(userPosts.length > 0) ?
+              <div className="profile-post-feed">
 
-              {(isLoggedInUser) ? <><CreatePost handlePostCreation={handlePostCreation} user={currentUser} /> <br /></> : ""}
+                {(isLoggedInUser) ? <><CreatePost handlePostCreation={handlePostCreation} user={currentUser} /> <br /></> : ""}
 
-              {(isCreatePost) ? <CreatePostPopUp close={handlePostCreation} user={currentUser} /> : ""}
-              <div className="users-posts">
-                {userPosts.map((post, i) => {
-                  return <Post key={i} post={post} currentUser={currentUser} />
-                })}
-              </div>
-            </div> : <div className="no-post">{`${selectedUser.first_name} has not posted anything`}</div>}
-        </div>
+                {(isCreatePost) ? <CreatePostPopUp close={handlePostCreation} user={currentUser} updatePosts={updatePosts}/> : ""}
+                <div className="users-posts">
+                  {userPosts.map((post, i) => {
+                    return <Post key={i} post={post} currentUser={currentUser} />
+                  })}
+                </div>
+              </div> : <div className="no-post">{`${selectedUser.first_name} has not posted anything`}</div>}
+          </div>}
+
       </div>
     </div>
 

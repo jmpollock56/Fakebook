@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Comment from "./Comment";
 import ProfileHoverPopUp from "./ProfileHoverPopUp";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineLike } from "react-icons/ai";
-import { BiLogIn } from "react-icons/bi";
+import { BiLock, BiLogIn } from "react-icons/bi";
 
 import "../styles/post.css";
 
@@ -14,8 +14,10 @@ export default function Post({ post, currentUser }) {
   const [comments, setComments] = useState(post.postComments);
   const [commentContent, setCommentContent] = useState("");
   const [postAge, setPostAge] = useState("");
+  const [showCommentInput, setShowCommentInput] = useState(false)
 
   const navigateTo = useNavigate();
+  const commentInputRef = useRef(null);
 
   useEffect(() => {
     for (let i = 0; i < currentUser.userLikes.length; i++) {
@@ -94,29 +96,36 @@ export default function Post({ post, currentUser }) {
   }
 
   function createPostAge() {
-    let now = new Date();
-    let postDate = new Date(post.post_age);
-    let timeDiff = now.getTime() - postDate.getTime();
-    let daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
-  
+    
+      let now = new Date();
+      let postDate = new Date(post.post_age);
+      let timeDiff = now.getTime() - postDate.getTime();
+      let daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+      let hoursDiff = Math.floor(timeDiff / (1000 * 3600));
+      let minutesDiff = Math.floor(timeDiff / (1000 * 60));
 
-    if (daysDiff > 0) {
-      let age = `${now.getDate() - postDate.getDate()}d`;
-      setPostAge(`${daysDiff}d`);
 
-    } else if ((now.getHours() - postDate.getHours()) < 1) {
-      let age = `${now.getMinutes() - postDate.getMinutes()}m`
-      setPostAge(age);
-
-    } else {
-      let age = `${now.getHours() - postDate.getHours()}h`;
-
-      setPostAge(age);
-    }
-  }
+      if (daysDiff > 0) {
+        let age = `${daysDiff}d`;
+        setPostAge(age);
+      } else if (hoursDiff > 0) {
+          let age = `${hoursDiff}h`;
+          setPostAge(age);
+      } else {
+          let age = `${minutesDiff}m`;
+          setPostAge(age);
+      }
+    
+   }
+    
 
   function goToProfile(){
     navigateTo(`/user/${post.user_id}`);
+  }
+
+  function scrollToComment(){
+    commentInputRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    commentInputRef.current.focus();
   }
 
   return (
@@ -154,7 +163,7 @@ export default function Post({ post, currentUser }) {
 
         <div className="flex justify-evenly items-center mt-1 mb-1 box-content h-10">
           <div style={{ color: isLiked ? 'blue' : 'black' }} className="flex justify-center items-center h-full w-1/3 hover:bg-sky-300 rounded-md cursor-pointer" onClick={handleLike}>Like</div>
-          <div className="flex justify-center items-center h-full w-1/3 hover:bg-sky-300 rounded-md cursor-pointer">Comment</div>
+          <div onClick={scrollToComment} className="flex justify-center items-center h-full w-1/3 hover:bg-sky-300 rounded-md cursor-pointer">Comment</div>
           <div className="flex justify-center items-center h-full w-1/3 hover:bg-sky-300 rounded-md cursor-pointer">Share</div>
         </div>
 
@@ -169,7 +178,7 @@ export default function Post({ post, currentUser }) {
           </div>
           <form onSubmit={handleComment} className="add-comment">
             <img className="size-8 rounded-full mr-2" src="https://i.stack.imgur.com/l60Hf.png" alt="profile" />
-            <input type="text" placeholder="Write a public comment..." className="comment-entry" onChange={(e) => { setCommentContent(e.target.value) }} />
+            <input ref={commentInputRef} type="text" placeholder="Write a public comment..." className="comment-entry" onChange={(e) => { setCommentContent(e.target.value) }} />
           </form>
         </div>
       </div>
