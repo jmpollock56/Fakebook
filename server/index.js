@@ -122,7 +122,8 @@ app.get('/api/posts', async (req, res) => {
 
   let completePosts = createCompletePosts(allUsers, allPosts, allLikes, allComments);
 
-  res.send(completePosts);
+ // res.send(completePosts);
+ res.json({message: "hello world"});
 
 })
 
