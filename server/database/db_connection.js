@@ -1,6 +1,8 @@
 import mysql from "mysql2"
 import dotenv from 'dotenv'
+import { db } from '@vercel/postgres';
 dotenv.config();
+
 
 
 const pool = mysql.createPool({ // collection of connections
