@@ -4,29 +4,29 @@ dotenv.config();
 
 
 const pool = mysql.createPool({ // collection of connections
-  host: process.env.MYSQL_HOST,
-  user: 'root',
-  password: 'password',
-  database: process.env.MYSQL_DATABASE
+  host: process.env.POSTGRES_HOST,
+  user: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DATABASE
 }).promise();         
 
 
 export async function getUsers() {
-  const [rows] = await pool.query("SELECT * FROM fakebook.user");
+  const [rows] = await pool.query("SELECT * FROM fakebook.users");
   return rows;
 }
 
 export async function getUser(id){
   const [rows] = await pool.query(`
   SELECT *
-  FROM fakebook.user
+  FROM fakebook.users
   WHERE id = ?`, [id]);
   return rows[0];
 }
 
 export async function createUser(id, firstName, lastName, email, gender, createDate, password, birthday){
   const [result] = await pool.query(`
-  INSERT INTO fakebook.user (user_id, first_name, last_name, email, gender, create_date, password, birthday)
+  INSERT INTO fakebook.users (user_id, first_name, last_name, email, gender, create_date, password, birthday)
   VALUES (?,?,?,?,?,?,?,?)
   `, [id, firstName, lastName, email, gender, createDate, password, birthday])
   return result.affectedRows;
