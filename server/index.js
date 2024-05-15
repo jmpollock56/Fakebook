@@ -154,7 +154,7 @@ async function photoUpload(req, res){
   }
 }
 
-app.get('/api/posts', async (req, res) => {
+app.get('/api/users', async (req, res) => {
   const allUsers = getUsers();
   res.json({users: allUsers});
 })
