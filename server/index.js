@@ -155,6 +155,11 @@ async function photoUpload(req, res){
 }
 
 app.get('/api/posts', async (req, res) => {
+  const allUsers = getUsers();
+  res.json({users: allUsers});
+})
+
+app.get('/api/posts', async (req, res) => {
     const allUsers = await getUsers();        
     const allPosts = await getPosts();
     const allLikes = await getLikes();

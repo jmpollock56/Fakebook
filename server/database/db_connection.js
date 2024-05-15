@@ -1,10 +1,30 @@
 import mysql from "mysql2"
 import dotenv from 'dotenv'
 import { db } from '@vercel/postgres';
+import { Client } from '@vercel/postgres';
+import { response } from "express";
 dotenv.config();
 
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+
+await client.connect();
+
+export async function getUsers() {
+  const { rows } = await client.query("SELECT * FROM \"users\"");
+  return rows;
+}
+
+// Define other functions similarly...
+
+await client.end();
 
 
+/* 
 const pool = mysql.createPool({ // collection of connections
   host: process.env.POSTGRES_URL,
   user: process.env.POSTGRES_USER,
@@ -88,6 +108,8 @@ export async function removeFriendship(currentUser, selectedUser){
   
   return result.affectedRows;
 }
+**/
+
 
 
 
