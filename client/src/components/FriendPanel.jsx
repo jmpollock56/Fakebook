@@ -20,11 +20,12 @@ export default function FriendPanel({ friend, toFriendProfile, currentUser }){
     checkIfCurrentFriend();
   })
 
+  
 
   return (
     <div className="panel-container" onClick={() =>{ toFriendProfile(friend.user_id) }}>
       <div className="left-panel">
-        <img className="friend-picture" src="https://i.stack.imgur.com/l60Hf.png" alt="pfp" />
+        <img className="friend-picture" src={(friend.user_pfp) ? friend.user_pfp : "/profile_pictures/default_pfp.png"} alt="pfp" />
         <div className="friend-left-name">{friend.name}</div>
       </div>
 

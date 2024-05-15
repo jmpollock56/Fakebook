@@ -1,0 +1,88 @@
+.upload-background{
+  position: fixed;
+  margin: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.2);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-main-container{
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  width: 800px;
+  background-color: skyblue;
+  border-radius: 10px;
+  box-sizing: content-box;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.upload-top{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; 
+  width: 100%;
+  
+  background-color: skyblue;
+}
+
+.upload-top > h1{
+  font-weight: 700;
+  font-size: 30px;
+  color: white;
+}
+
+.upload-top > button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(235, 247, 252, 0.616);
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  box-sizing: content-box;
+  padding: 5px;
+}
+
+.user-upload{
+  margin-top: 10px;
+}
+
+.user-upload > button{
+  background-color: rgb(51, 185, 238);
+  box-sizing: content-box;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.uploaded-photos{
+  margin-top: 15px;
+}
+
+
+
+.uploaded-photos > h1{
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.uploaded-photos > img{
+  height: 100px;
+  width: 100px;
+}
+
+.uploaded-photos-container{
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto;
+  row-gap: 5px;
+  column-gap: 5px;
+}

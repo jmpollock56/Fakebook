@@ -21,6 +21,7 @@ export default function Home(){
       
       if(loggedInUser !== null){
         const foundUser = JSON.parse(loggedInUser);
+        console.log(foundUser);
         setCurrentUser(foundUser);
       } else {
         console.log("loggedInUser in null!!!!");
@@ -84,7 +85,7 @@ export default function Home(){
   return (currentUser) ? (
     <div className="static h-[100%]">
       <UserContext.Provider value={currentUser}>
-        <NavBar />
+        <NavBar currentUser={currentUser}/>
       
         <div className="relative flex flex-col w-[600px] h-full mx-auto top-20 box-content">
           <CreatePost handlePostCreation={handlePostCreation} user={currentUser}/>

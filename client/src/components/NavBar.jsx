@@ -1,4 +1,4 @@
-import React, { useContext, useState, useMemo } from "react";
+import React, { useContext, useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom"
 import { CiHome } from "react-icons/ci";
 import { FaUserFriends } from "react-icons/fa";
@@ -17,10 +17,25 @@ export default function NavBar() {
 
   
   const [isDropDownMenu, setIsDropDownMenu] = useState(false);
-
+  const [currentUser, setCurrentUser] = useState({});
   const navigateTo = useNavigate();
 
-   
+  useEffect(() => {
+    const fetchCurrentUser = () => {
+
+      const loggedInUser = localStorage.getItem('currentUser');
+
+      if (loggedInUser !== null) {
+        const foundUser = JSON.parse(loggedInUser);
+        setCurrentUser(foundUser);
+      } else {
+        console.log("loggedInUser in null!!!!");
+      }
+    }
+    fetchCurrentUser();
+
+  }, []);
+
 
   return (
    <header className="bg-sky-500 w-full fixed box-content p-2 z-10 shadow-xl">
@@ -71,7 +86,7 @@ export default function NavBar() {
         
 
         <div className="relative ml-2 cursor-pointer" onClick={() => {setIsDropDownMenu(!isDropDownMenu)}}>
-          <img className="size-8 rounded-full" src="https://i.stack.imgur.com/l60Hf.png" alt="profile" />
+          <img className="size-8 rounded-full" src={currentUser.pfp} alt="profile" />
           <div className="absolute bottom-0 right-0 rounded-full bg-white">
             <IoIosArrowDown className="h-3 w-3"/>
           </div>

@@ -4,10 +4,11 @@ import "../styles/FriendProfileDisplay.css";
 
 export default function FriendProfileDisplay({ friend, setSelectedUser, toFriendProfile }){
   
+  
  
   return(
     <div className="friend-container" onClick={toFriendProfile}>
-      <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="friend-photo"/>
+      <img src={(friend.user_pfp) ? friend.user_pfp : "/profile_pictures/default_pfp.png"} alt="pic" className="friend-photo"/>
       <div className="friend-name">{friend.name}</div>
     </div>
   );

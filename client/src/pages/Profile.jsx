@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import CreatePost from "../components/CreatePost";
 import CreatePostPopUp from "../components/CreatePostPopUp";
 import Post from "../components/Post";
 import FriendProfileDisplay from "../components/FriendProfileDisplay";
 import ProfileFriendsTab from "../components/ProfileFriendsTab";
+import UploadPictureDisplay from "../components/UploadPictureDisplay";
 import { GiHouse } from "react-icons/gi";
+import { FaCamera } from "react-icons/fa";
 import "../styles/Profile.css";
-import { useNavigate, useParams } from "react-router-dom";
+
 
 
 export default function Profile() {
@@ -21,6 +24,7 @@ export default function Profile() {
   const [friendBtnText, setFriendBtnText] = useState("Add Friend");
   const [isFriend, setIsFriend] = useState(false);
   const [showFriendsTab, setShowFriendsTab] = useState(false);
+  const [uploadPicture, setUploadPicture] = useState(false);
 
   const { user_id } = useParams();
   const navigateTo = useNavigate();
@@ -41,16 +45,23 @@ export default function Profile() {
 
   }, []);
 
+  function isImage(file){
+    const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+    const extension = file.name.split('.').pop().toLowerCase();
+    return allowedExtensions.includes(extension);
+  }
+
   function findFriend() {
      
     setIsFriend(false);
     for (let i = 0; i < selectedUserFriends.length; i++) {
-
+      
       if (currentUser.user_id === selectedUserFriends[i].user_id) {
         setIsFriend(true);
         
       } else {
         setIsFriend(false);
+        
         
       }
 
@@ -92,10 +103,7 @@ export default function Profile() {
         });
 
         if (response.ok) {
-          console.log('add');
-          
           setIsFriend(currentIsFriend => !currentIsFriend);
-
         }
 
       } catch (error) {
@@ -125,7 +133,6 @@ export default function Profile() {
 
   }
 
-
   function friendHoverText() { // work on pls
     setFriendBtnText("Remove?");
   }
@@ -154,6 +161,7 @@ export default function Profile() {
     
   } 
 
+  
   async function updatePosts(newPost){
     try{
       const response = await fetch('/api/posts/create', {
@@ -237,21 +245,32 @@ export default function Profile() {
     setIsCreatePost(!isCreatePost);
   }
 
+
   return (
     <div className="complete-container">
       <NavBar />
       <div className="full-profile-container">
         <div className="top-profile-container">
           <div className="cover-photo-container">
+            <img className="cover-photo" src="/profile_pictures/bilbo_baggins_pfp_1.jpg" alt="cover" />
             {(isLoggedInUser) ? <button className="edit-cover-btn">Edit cover photo</button> : ""}
           </div>
           <div className="full-info-container">
 
             <div className="profile-info-container">
               <div className="inner-profile">
+
                 <div className="profile-picture">
-                  <img src="https://i.stack.imgur.com/l60Hf.png" alt="pfp" />
+                  <img src={(selectedUser.pfp) ? selectedUser.pfp : "/profile_pictures/default_pfp.png"} alt="pfp" />
+
+                  {(isLoggedInUser) ? 
+                  <div className="upload-photo-container" onClick={() => {setUploadPicture(true)}}>
+                    <FaCamera className="camera-icon" />
+                  </div> : ""}
+
                 </div>
+
+                
 
                 <div className="name-and-friends-container">
                   <div className="name-container">
@@ -302,10 +321,10 @@ export default function Profile() {
                 <hr />
                 <div className="intro-item">
                   <GiHouse />
-                  <div className="lives-in-location">Lives in Charlotte, North Carolina</div>
+                  <div className="lives-in-location">{`Lives in ${selectedUser.lives_in}`}</div>
                 </div>
                 <div className="intro-item">
-                  <div className="lives-from-location">From Leesburg, Georgia</div>
+                  <div className="lives-from-location">{`From ${selectedUser.hometown}`}</div>
                 </div>
                 <div className="intro-item">
 
@@ -375,6 +394,7 @@ export default function Profile() {
           </div>}
 
       </div>
+      {(uploadPicture) ? <UploadPictureDisplay setUploadPicture={setUploadPicture} isImage={isImage}/> : ""}
     </div>
 
   );

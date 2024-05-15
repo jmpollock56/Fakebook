@@ -1,20 +1,26 @@
 import express from "express"
 import bodyParser from "body-parser"
+import fs from 'fs';
+import path from "path";
+import multer from "multer";
 import { v4 as uuidv4 } from "uuid";
 import { getUser, getUsers, createUser, getPosts, createPost, getLikes, addLike, removeLike, getComments, createComment, getFriends, addFriendship, removeFriendship } from "./database/db_connection.js";
 
 const app = express();
+const upload = multer();
 
 
 app.use(bodyParser.json());
 let currentUser = {};
+
 function createCompletePosts(users, posts, likes, comments) {
-  let objectPosts = [];
+    let objectPosts = [];
 
   for (let i = 0; i < users.length; i++) {
     for (let j = 0; j < comments.length; j++) {
       if (users[i].user_id === comments[j].comment_user_id) {
         comments[j].user_name = `${users[i].first_name} ${users[i].last_name}`;
+        comments[j].user_pfp = users[i].pfp;
       }
     }
   }
@@ -28,6 +34,7 @@ function createCompletePosts(users, posts, likes, comments) {
           post_id: posts[j].post_id,
           user_id: users[i].user_id,
           user_name: `${users[i].first_name} ${users[i].last_name}`,
+          user_pfp: users[i].pfp,
           post_content: posts[j].content,
           post_age: posts[j].create_date,
           likes: 0
@@ -94,6 +101,8 @@ async function createUserWithFriends(selectedUser) {
     if (selectedUser.user_id === friends[i].user1_id) {
       selectedUserFriends.push({ user_id: friends[i].user2_id });
 
+      
+
     } else if (selectedUser.user_id === friends[i].user2_id) {
       selectedUserFriends.push({ user_id: friends[i].user1_id });
     }
@@ -103,27 +112,58 @@ async function createUserWithFriends(selectedUser) {
     for (let j = 0; j < users.length; j++) {
       if (selectedUserFriends[i].user_id == users[j].user_id) {
         selectedUserFriends[i].name = `${users[j].first_name} ${users[j].last_name}`;
-        console.log(selectedUserFriends[i]);
+        selectedUserFriends[i].user_pfp = users[j].pfp;
+        
       }
     }
   }
 
+  console.log(selectedUserFriends);
+
   return { ...selectedUser, userFriends: selectedUserFriends };
 }
 
+async function photoUpload(req, res){
+  try{
+    const file = req.file;
 
+    if(!file){
+      return res.status(400).send('No file Uploaded');
+    }
+
+    const photoDirectory = 'photos'; //name of folder with photos
+
+    //make directory if no there already
+    if(!fs.existsSync(photoDirectory)){
+      fs.mkdirSync(photoDirectory);
+    }
+
+    const filePath = path.join(photoDirectory, file.originalname);
+
+    fs.writeFileSync(filePath, file.buffer);
+    console.log('file saved: ', filePath);
+
+    
+
+    
+
+    return res.status(200).send('Photo uploaded');
+  } catch {
+    console.error(error);
+    return res.status(500).send("Internal server error");
+  }
+}
 
 app.get('/api/posts', async (req, res) => {
-  const allUsers = await getUsers();
-  const allPosts = await getPosts();
-  const allLikes = await getLikes();
-  const allComments = await getComments();
-
+    const allUsers = await getUsers();        
+    const allPosts = await getPosts();
+    const allLikes = await getLikes();
+    const allComments = await getComments();
 
   let completePosts = createCompletePosts(allUsers, allPosts, allLikes, allComments);
 
- // res.send(completePosts);
- res.json({message: "hello world"});
+  res.send(completePosts);
+
 
 })
 
@@ -315,6 +355,8 @@ app.post('/api/friend/remove', async (req, res) => {
     return affectedRows;
   }
 })
+
+app.post('/api/photo/upload', upload.single('file'), photoUpload);
 
 
 

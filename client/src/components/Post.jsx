@@ -128,6 +128,7 @@ export default function Post({ post, currentUser }) {
     commentInputRef.current.focus();
   }
 
+  
   return (
     
       <div className="flex flex-col bg-sky-300 rounded-md box-content p-4 shadow-md mb-5">
@@ -136,7 +137,7 @@ export default function Post({ post, currentUser }) {
 
           <div className="flex flex-row items-center" onClick={goToProfile}>
 
-            <img className="size-8 rounded-full mr-2 cursor-pointer" src="https://i.stack.imgur.com/l60Hf.png" alt="profile" />
+            <img className="size-8 rounded-full mr-2 cursor-pointer" src={post.user_pfp} alt="profile" />
 
             <div className="flex flex-col items-start cursor-pointer" >
               <div className="font-semibold">{post.user_name}</div>
@@ -177,7 +178,7 @@ export default function Post({ post, currentUser }) {
             })}
           </div>
           <form onSubmit={handleComment} className="add-comment">
-            <img className="size-8 rounded-full mr-2" src="https://i.stack.imgur.com/l60Hf.png" alt="profile" />
+            <img className="size-8 rounded-full mr-2" src={(currentUser.pfp) ? currentUser.pfp : "/profile_pictures/default_pfp.png"} alt="profile" />
             <input ref={commentInputRef} type="text" placeholder="Write a public comment..." className="comment-entry" onChange={(e) => { setCommentContent(e.target.value) }} />
           </form>
         </div>

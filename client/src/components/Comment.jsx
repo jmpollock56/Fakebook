@@ -4,31 +4,34 @@ import { BiLogIn } from "react-icons/bi";
 
 export default function Comment({ comment }) {
   const [commentAge, setCommentAge] = useState("");
-
+  
   useEffect(() => {
-    const now = new Date();
-    const commentDate = new Date(comment.comment_create_date);
-    let timeDiff = now.getTime() - commentDate.getTime();
-    let daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+      let now = new Date();
+      let commentDate = new Date(comment.comment_create_date);
+      let timeDiff = now.getTime() - commentDate.getTime();
+      let daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+      let hoursDiff = Math.floor(timeDiff / (1000 * 3600));
+      let minutesDiff = Math.floor(timeDiff / (1000 * 60));
+
+
+      if (daysDiff > 0) {
+        let age = `${daysDiff}d`;
+        setCommentAge(age);
+      } else if (hoursDiff > 0) {
+          let age = `${hoursDiff}h`;
+          setCommentAge(age);
+      } else {
+          let age = `${minutesDiff}m`;
+          setCommentAge(age);
+      }
     
-    if(daysDiff > 0){
-      let age = `${daysDiff}d`;
-      setCommentAge(age);
-    } else if((now.getHours() - commentDate.getHours()) < 1){
-      let age = `${now.getMinutes() - commentDate.getMinutes()}m`
-      setCommentAge(age);
-    } else {
-      let age = `${now.getHours() - commentDate.getHours()}h`;
-      setCommentAge(age);
-    }
-    
-  });
+  },[]);
 
   
   return (
     <div className="comment-container">
       <div className="comment-upper-container">
-        <img src="https://i.stack.imgur.com/l60Hf.png" alt="pfp" className="pfp" />
+        <img src={(comment.user_pfp) ? comment.user_pfp : "/profile_pictures/default_pfp.png"} alt="pfp" className="pfp" />
         <div className="comment-main-container">
           <div className="comment-user-name"><b>{comment.user_name}</b></div>
           <div className="comment-content">{comment.comment_content}</div>
