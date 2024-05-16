@@ -169,6 +169,7 @@ app.get('/api/posts', async (req, res) => {
 
 app.get('/api/user', async (req, res) => {
   let user = getUser(1);
+  console.log(user);
   if(user){
     res.json({ sentUser: user });
   } else {
