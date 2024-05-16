@@ -25,7 +25,7 @@ export default function Login() {
         body: JSON.stringify({ emailOrPhone, password }),
       });
       
-    
+      console.log(response);
       if (response.ok){    
         const data = await response.json();
         setCurrentUser(data.currentUser);

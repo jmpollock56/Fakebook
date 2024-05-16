@@ -3,6 +3,10 @@ import dotenv from 'dotenv'
 dotenv.config();
 
 
+
+
+
+
 const pool = mysql.createPool({ // collection of connections
   host: process.env.MYSQL_HOST,
   user: process.env.MYSQL_USER,

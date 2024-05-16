@@ -1,5 +1,6 @@
 import express from "express"
 import bodyParser from "body-parser"
+import cors from 'cors';
 import fs from 'fs';
 import path from "path";
 import multer from "multer";
@@ -8,9 +9,14 @@ import { getUser, getUsers, createUser, getPosts, createPost, getLikes, addLike,
 
 const app = express();
 const upload = multer();
+const corsOptions = {
+  origin: 'http://localhost:5173',
+  optionsSuccessStatus: 200
+};
 
 
 app.use(bodyParser.json());
+app.use(cors(corsOptions));
 let currentUser = {};
 
 function createCompletePosts(users, posts, likes, comments) {
