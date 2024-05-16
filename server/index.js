@@ -168,7 +168,9 @@ app.get('/api/posts', async (req, res) => {
 })
 
 app.get('/api/user', async (req, res) => {
-  res.json({message: "Hello vercel"});
+  
+  let users = await getUsers();
+  res.json({u: users});
 });
 
 app.post('/api/login', async (req, res) => {
