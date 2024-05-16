@@ -167,6 +167,15 @@ app.get('/api/posts', async (req, res) => {
 
 })
 
+app.get('/api/user', async (req, res) => {
+  let user = getUser(1);
+  if(user){
+    res.json({ sentUser: user });
+  } else {
+    res.json('nothing');
+  }
+});
+
 app.post('/api/login', async (req, res) => {
   const { emailOrPhone, password } = req.body;
   const users = await getUsers();
