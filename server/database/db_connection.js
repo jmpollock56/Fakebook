@@ -1,34 +1,32 @@
 import mysql from "mysql2"
 import dotenv from 'dotenv'
-import { db } from '@vercel/postgres';
 dotenv.config();
 
 
-
 const pool = mysql.createPool({ // collection of connections
-  host: process.env.POSTGRES_URL,
-  user: process.env.POSTGRES_USER,
-  password: process.env.POSTGRES_PASSWORD,
-  database: process.env.POSTGRES_DATABASE
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE
 }).promise();         
 
 
 export async function getUsers() {
-  const [rows] = await pool.query("SELECT * FROM user");
+  const [rows] = await pool.query("SELECT * FROM users");
   return rows;
 }
 
 export async function getUser(id){
   const [rows] = await pool.query(`
   SELECT *
-  FROM user
+  FROM users
   WHERE id = ?`, [id]);
   return rows[0];
 }
 
 export async function createUser(id, firstName, lastName, email, gender, createDate, password, birthday){
   const [result] = await pool.query(`
-  INSERT INTO user (user_id, first_name, last_name, email, gender, create_date, password, birthday)
+  INSERT INTO users (user_id, first_name, last_name, email, gender, create_date, password, birthday)
   VALUES (?,?,?,?,?,?,?,?)
   `, [id, firstName, lastName, email, gender, createDate, password, birthday])
   return result.affectedRows;
