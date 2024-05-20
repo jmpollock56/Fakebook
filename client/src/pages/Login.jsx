@@ -22,8 +22,7 @@ export default function Login() {
       const response = await fetch('https://fakebook-server-omega.vercel.app/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ emailOrPhone, password }),
-        mode: 'no-cors'
+        body: JSON.stringify({ emailOrPhone, password })
       });
       
       console.log(response);
