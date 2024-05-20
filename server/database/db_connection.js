@@ -11,7 +11,7 @@ const pool = mysql.createPool({ // collection of connections
   host: 'fakebook-db.cpm6s2sguyrk.us-east-2.rds.amazonaws.com',
   user: 'admin',
   password: 'j4PTu6taJN',
-  database: 'fakebook'
+  database: 'fakebook-db'
 }).promise();      
 
 
