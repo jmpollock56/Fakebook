@@ -4,14 +4,20 @@ import fs from 'fs';
 import path from "path";
 import multer from "multer";
 import cors from 'cors';
+import aws from 'aws-sdk';
 import { getUser, getUsers, createUser, getPosts, createPost, getLikes, addLike, removeLike, getComments, createComment, getFriends, addFriendship, removeFriendship } from "./database/db_connection.js";
 
 const app = express();
 const upload = multer();
+const s3 = new AWS.S3();
 
 app.use(bodyParser.json());
 app.use(cors());
 
+
+s3.putObject({
+
+}).promise();
 
 let currentUser = {};
 
@@ -266,6 +272,7 @@ app.post('/api/posts/like/remove', async (req, res) => {
 
 app.post('/api/posts/comment/create', async (req, res) => {
   if (req.body) {
+    console.log("create comment called - in api");
     const { post_id, user_id, content } = req.body;
     const affectedRows = await createComment(post_id, user_id, content);
     affectedRows < 1 ? res.status(400).json({ message: 'Failed to create post', newPost }) : res.status(201).json({ message: 'Post created successfully' });

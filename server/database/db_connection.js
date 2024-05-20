@@ -66,6 +66,7 @@ export async function getComments(){
 
 export async function createComment(post_id, user_id, content){
   let date = new Date();
+  console.log("create comment called");
   const [result] = await pool.query("INSERT INTO comment (comment_user_id, comment_post_id, comment_content, comment_create_date) VALUES (?,?,?,?)", [user_id, post_id, content, date]);
   return result.affectedRows;
 }

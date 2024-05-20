@@ -37,7 +37,7 @@ export default function ProfileIconDropdown(){
     <div className="drop-down-container">
 
       <div className="main-profile" onClick={()=>{navigateTo(`/user/${currentUser.user_id}`)}}>
-        <img className="size-8 rounded-full mr-2" src={currentUser.pfp} alt="profile" />
+        <img className="size-8 rounded-full mr-2" src={(currentUser.pfp) ? currentUser.pfp : "/profile_pictures/default_pfp.png"} alt="profile" />
         <div className="profile-name">{`${currentUser.first_name} ${currentUser.last_name}`}</div>
       </div>
 
