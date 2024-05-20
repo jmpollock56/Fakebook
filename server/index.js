@@ -9,15 +9,10 @@ import { getUser, getUsers, createUser, getPosts, createPost, getLikes, addLike,
 
 const app = express();
 const upload = multer();
-const s3 = new AWS.S3();
+
 
 app.use(bodyParser.json());
 app.use(cors());
-
-
-s3.putObject({
-
-}).promise();
 
 let currentUser = {};
 
