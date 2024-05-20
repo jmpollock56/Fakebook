@@ -22,7 +22,7 @@ export default function CreateAccountPop({ closeCreate }) {
     console.log(`${firstName}, ${lastName}, ${email}, ${password}, ${birthdayMonth}, ${birthdayDay}, ${birthdayYear}, ${gender}`);
     
     try{
-      const response = await fetch('/api/account/create', {
+      const response = await fetch('https://fakebook-server-omega.vercel.app/api/account/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ firstName, lastName, email, password, birthdayMonth, birthdayDay, birthdayYear, gender }),

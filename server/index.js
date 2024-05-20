@@ -4,7 +4,6 @@ import fs from 'fs';
 import path from "path";
 import multer from "multer";
 import cors from 'cors';
-import { v4 as uuidv4 } from "uuid";
 import { getUser, getUsers, createUser, getPosts, createPost, getLikes, addLike, removeLike, getComments, createComment, getFriends, addFriendship, removeFriendship } from "./database/db_connection.js";
 
 const app = express();

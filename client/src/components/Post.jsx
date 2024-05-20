@@ -38,7 +38,7 @@ export default function Post({ post, currentUser }) {
     if (!isLiked) {
       try {
 
-        const response = await fetch('/api/posts/like/add', {
+        const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts/like/add', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ user_id: currentUser.user_id, post_id: post.post_id }),
@@ -57,7 +57,7 @@ export default function Post({ post, currentUser }) {
       }
     } else {
       try {
-        const response = await fetch('/api/posts/like/remove', {
+        const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts/like/remove', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ user_id: currentUser.user_id, post_id: post.post_id }),
@@ -80,7 +80,7 @@ export default function Post({ post, currentUser }) {
 
     try {
 
-      const response = await fetch('/api/posts/comment/create', {
+      const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts/comment/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_id: currentUser.user_id, post_id: post.post_id, content: commentContent }),

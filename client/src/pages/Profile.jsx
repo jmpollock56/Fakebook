@@ -96,7 +96,7 @@ export default function Profile() {
       
       try {
         
-        const response = await fetch('/api/friend/add', {
+        const response = await fetch('https://fakebook-server-omega.vercel.app/api/friend/add', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ currentUser: currentUser.user_id, selectedUser: selectedUser.user_id }),
@@ -113,7 +113,7 @@ export default function Profile() {
       
       try {
         
-        const response = await fetch('/api/friend/remove', {
+        const response = await fetch('https://fakebook-server-omega.vercel.app/api/friend/remove', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ currentUser: currentUser.user_id, selectedUser: selectedUser.user_id }),
@@ -143,7 +143,7 @@ export default function Profile() {
 
   async function fetchPosts(){
     try{
-      const response = await fetch('/api/posts');
+      const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts');
 
       if(!response.ok){
         throw new Error('Network response was no ok');
@@ -164,7 +164,7 @@ export default function Profile() {
   
   async function updatePosts(newPost){
     try{
-      const response = await fetch('/api/posts/create', {
+      const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts/create', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(newPost)
@@ -187,7 +187,7 @@ export default function Profile() {
     const fetchInitUserProfile = async () => {
        
       try {
-        const response = await fetch('/api/user/profile', {
+        const response = await fetch('https://fakebook-server-omega.vercel.app/api/user/profile', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ user_id: user_id })
@@ -220,7 +220,7 @@ export default function Profile() {
   useEffect(() => {
     const fetchUserPosts = async () => {
       try {
-        const response = await fetch('/api/posts');
+        const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts');
 
         if (!response.ok) {
           throw new Error('Network response was no ok');
