@@ -88,6 +88,8 @@ export default function Post({ post, currentUser }) {
 
       if (response.ok) {
         console.log('comment added');
+      } else {
+        console.log(response);
       }
 
     } catch (error) {
