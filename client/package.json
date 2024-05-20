@@ -2,7 +2,6 @@
   "name": "client",
   "private": true,
   "version": "0.0.1",
-  "proxy": "https://fakebook-server-omega.vercel.app",
   "type": "module",
   "scripts": {
     "dev": "vite",

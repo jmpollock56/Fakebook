@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://fakebook-server-omega.vercel.app",
+        target: "http://fakebook-server-omega.vercel.app",
         changeOrigin: true,
         secure: false,
       },
