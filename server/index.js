@@ -9,8 +9,6 @@ import { getUser, getUsers, createUser, getPosts, createPost, getLikes, addLike,
 const app = express();
 const upload = multer();
 
-
-
 app.use(bodyParser.json());
 
 let currentUser = {};
@@ -176,7 +174,7 @@ app.get('/api/posts', async (req, res) => {
 app.get('/api/user', async (req, res) => {
   let user = await getUser(1);
  
-  res.json({u: "hi"});
+  res.json({u: user});
 });
 
 app.post('/api/login', async (req, res) => {

@@ -11,8 +11,10 @@ const pool = mysql.createPool({ // collection of connections
   host: 'fakebook-db.cpm6s2sguyrk.us-east-2.rds.amazonaws.com',
   user: 'admin',
   password: 'j4PTu6taJN',
-  database: 'fakebook-db'
-}).promise();      
+  database: 'fakebook'
+}).promise();   
+
+
 
 
 
@@ -27,8 +29,8 @@ export async function getUser(id){
   const [rows] = await pool.query(`
   SELECT *
   FROM users
-  WHERE id = ?`, [id]);
-  return rows[0];
+  WHERE user_id = ?`, [id]);
+  return rows;
 }
 
 export async function createUser(id, firstName, lastName, email, gender, createDate, password, birthday){
