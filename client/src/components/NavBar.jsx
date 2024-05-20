@@ -86,7 +86,7 @@ export default function NavBar() {
         
 
         <div className="relative ml-2 cursor-pointer" onClick={() => {setIsDropDownMenu(!isDropDownMenu)}}>
-          <img className="size-8 rounded-full" src={currentUser.pfp} alt="profile" />
+          <img className="size-8 rounded-full" src={(currentUser.pfp) ? currentUser.pfp : "/profile_pictures/default_pfp.png"} alt="profile" />
           <div className="absolute bottom-0 right-0 rounded-full bg-white">
             <IoIosArrowDown className="h-3 w-3"/>
           </div>
