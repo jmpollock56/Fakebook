@@ -139,7 +139,7 @@ export default function Post({ post, currentUser }) {
 
           <div className="flex flex-row items-center" onClick={goToProfile}>
 
-            <img className="size-8 rounded-full mr-2 cursor-pointer" src={post.user_pfp} alt="profile" />
+            <img className="size-8 rounded-full mr-2 cursor-pointer" src={(post.user_pfp) ? post.user_pfp : "/profile_pictures/default_pfp.png"} alt="profile" />
 
             <div className="flex flex-col items-start cursor-pointer" >
               <div className="font-semibold">{post.user_name}</div>
