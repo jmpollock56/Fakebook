@@ -19,11 +19,10 @@ export default function Login() {
     e.preventDefault();
     
     try{
-      const response = await fetch('https://fakebook-server-omega.vercel.app/api/login', {
+      const response = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ emailOrPhone, password }), 
-        mode: 'no-cors'
+        body: JSON.stringify({ emailOrPhone, password })
       });
       
       console.log(response);
@@ -52,8 +51,7 @@ export default function Login() {
   function handlePopUpClose(){
     setIsCreateAccount(false);
   }
-
-    
+  
   return (
     <div className="home-container">
 

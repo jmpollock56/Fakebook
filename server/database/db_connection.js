@@ -2,11 +2,6 @@ import mysql from "mysql2"
 import dotenv from 'dotenv'
 dotenv.config();
 
-
-
-
-
-
 const pool = mysql.createPool({ // collection of connections
   host: 'fakebook-db.cpm6s2sguyrk.us-east-2.rds.amazonaws.com',
   user: 'admin',
@@ -15,13 +10,9 @@ const pool = mysql.createPool({ // collection of connections
 }).promise();   
 
 
-
-
-
-
 export async function getUsers() {
   const [rows] = await pool.query("SELECT * FROM users");
-  console.log(rows);
+  
   return rows;
 }
 
