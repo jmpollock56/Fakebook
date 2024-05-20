@@ -250,7 +250,6 @@ app.post('/api/account/create', async (req, res) => {
   } else {
     console.error("Some part of the user data is null");
   }
-
 })
 
 app.post('/api/posts/like/add', async (req, res) => {
