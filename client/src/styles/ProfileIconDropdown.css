@@ -1,6 +1,6 @@
 .drop-down-container{
   position: fixed;
-  background-color: rgb(188, 235, 253);
+  background-color: white;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 5px;
   width: 300px;
@@ -21,7 +21,7 @@
 }
 
 .main-profile:hover{
-  background-color: rgba(128, 128, 128, 0.274);
+  background-color: #dfe3ee;
   
 }
 
@@ -51,7 +51,7 @@
 }
 
 .settings-container:hover{
-  background-color: rgba(128, 128, 128, 0.274);
+  background-color: #dfe3ee;
 }
 
 

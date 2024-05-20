@@ -133,7 +133,7 @@ export default function Post({ post, currentUser }) {
   
   return (
     
-      <div className="flex flex-col bg-sky-300 rounded-md box-content p-4 shadow-md mb-5">
+      <div className="flex flex-col bg-white rounded-md box-content p-4 shadow-md mb-5">
 
         <div className="flex flex-row justify-between">
 
@@ -156,7 +156,7 @@ export default function Post({ post, currentUser }) {
 
         <div className="flex flex-row justify-between mt-2 mb-2">
           <div className="flex w-7 justify-between items-center">
-            <AiOutlineLike className="bg-white rounded-full" />
+            <AiOutlineLike className="rounded-full" />
             <div>{likes}</div>
           </div>
           <div>{comments.length} Comment(s)</div>
@@ -165,9 +165,9 @@ export default function Post({ post, currentUser }) {
         <hr />
 
         <div className="flex justify-evenly items-center mt-1 mb-1 box-content h-10">
-          <div style={{ color: isLiked ? 'blue' : 'black' }} className="flex justify-center items-center h-full w-1/3 hover:bg-sky-300 rounded-md cursor-pointer" onClick={handleLike}>Like</div>
-          <div onClick={scrollToComment} className="flex justify-center items-center h-full w-1/3 hover:bg-sky-300 rounded-md cursor-pointer">Comment</div>
-          <div className="flex justify-center items-center h-full w-1/3 hover:bg-sky-300 rounded-md cursor-pointer">Share</div>
+          <div style={{ color: isLiked ? 'blue' : 'black' }} className="flex justify-center items-center h-full w-1/3 hover:bg-[#dfe3ee] rounded-md cursor-pointer" onClick={handleLike}>Like</div>
+          <div onClick={scrollToComment} className="flex justify-center items-center h-full w-1/3 hover:bg-[#dfe3ee] rounded-md cursor-pointer">Comment</div>
+          <div className="flex justify-center items-center h-full w-1/3 hover:bg-[#dfe3ee] rounded-md cursor-pointer">Share</div>
         </div>
 
         <hr />

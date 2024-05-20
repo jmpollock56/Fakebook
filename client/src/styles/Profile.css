@@ -22,7 +22,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  background-color: skyblue;
+  background-color: white;
 }
 
 .cover-photo-container{
@@ -94,7 +94,7 @@
 }
 
 .upload-photo-container:hover{
-  background-color: rgb(204, 202, 202);
+  background-color: #dfe3ee;
 }
 
 .camera-icon{
@@ -160,7 +160,7 @@
   position: relative;
   right: 40px;
   top: 150px;
-  background-color: whitesmoke;
+  background-color: #dfe3ee;
   height: 30px;
   width: 100px;
   border-radius: 5px;
@@ -215,11 +215,12 @@
 }
 
 .intro-container{
-  background-color: skyblue;
+  background-color: white;
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 10px;
+  color: black;
 }
 
 .intro-item{
@@ -242,7 +243,8 @@
 .photos-container{
   width: 100%;
   border-radius: 10px;
-  background-color: skyblue;
+  background-color: white;
+  color: black;
 }
 
 .top-photos{
@@ -292,9 +294,10 @@
 .friends-container{
   width: 100%;
   margin-top: 10px;
-  background-color: skyblue;
+  background-color: white;
   border-radius: 10px;
   padding: 10px;
+  color: black;
 }
 
 .top-friends{

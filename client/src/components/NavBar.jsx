@@ -38,33 +38,33 @@ export default function NavBar() {
 
 
   return (
-   <header className="bg-sky-500 w-full fixed box-content p-2 z-10 shadow-xl">
+   <header className="bg-white w-full fixed box-content p-2 z-10 shadow-xl">
     <nav className="flex justify-between items-center w-[98%] mx-auto">
 
       <div className="flex items-center justify-evenly">
         <img onClick={() => {navigateTo('/home')}}  className="size-8 cursor-pointer mr-2" src="profile_pictures/fb_logo.png" alt="..." />
-        <input className="rounded-full p-1" type="text" placeholder="Search Fakebook"/>
+        <input className="rounded-full p-1 bg-[#dfe3ee]" type="text" placeholder="Search Fakebook"/>
       </div>
 
       <div className="flex items-center h-full w-[50%] justify-center">
 
-        <div onClick={() => {navigateTo('/home')}} className="flex justify-center h-8 w-28 items-center hover:bg-sky-400 rounded-md cursor-pointer">
+        <div onClick={() => {navigateTo('/home')}} className="flex justify-center h-8 w-28 items-center hover:bg-[#dfe3ee] rounded-md cursor-pointer">
           <CiHome className="size-5"/> 
         </div>
 
-        <div className="flex justify-center items-center h-8 w-28 hover:bg-sky-400 rounded-md cursor-pointer">
+        <div className="flex justify-center items-center h-8 w-28 hover:bg-[#dfe3ee] rounded-md cursor-pointer">
           <FaUserFriends className="size-5"/>
         </div>
 
-        <div className="flex justify-center items-center  h-8 w-28 hover:bg-sky-400 rounded-md cursor-pointer">
+        <div className="flex justify-center items-center  h-8 w-28 hover:bg-[#dfe3ee] rounded-md cursor-pointer">
           <MdOndemandVideo className="size-5"/>
         </div>
 
-        <div className="flex justify-center items-center  h-8 w-28 hover:bg-sky-400 rounded-md cursor-pointer">
+        <div className="flex justify-center items-center  h-8 w-28 hover:bg-[#dfe3ee] rounded-md cursor-pointer">
           <CiShop className="size-5"/>
         </div>
 
-        <div className="flex justify-center items-center  h-8 w-28 hover:bg-sky-400 rounded-md cursor-pointer">
+        <div className="flex justify-center items-center  h-8 w-28 hover:bg-[#dfe3ee] rounded-md cursor-pointer">
          <GrGroup className="size-5"/>
         </div>
             
@@ -72,15 +72,15 @@ export default function NavBar() {
 
       <div className="flex items-center"> 
 
-        <div className="flex items-center justify-center size-8 rounded-full bg-sky-400 hover:bg-sky-300 cursor-pointer">
+        <div className="flex items-center justify-center size-8 rounded-full bg-[#dfe3ee] hover:bg-[#cdd5ec] cursor-pointer">
           <CgMenuGridO className="size-5"/>
         </div>
 
-        <div className="flex items-center justify-center size-8 rounded-full bg-sky-400 ml-2 hover:bg-sky-300 cursor-pointer">
+        <div className="flex items-center justify-center size-8 rounded-full bg-[#dfe3ee] ml-2 hover:bg-[#cdd5ec] cursor-pointer">
           <BiMessageRoundedDetail className="size-5"/>
         </div>
 
-        <div className="flex items-center justify-center size-8 rounded-full bg-sky-400 ml-2 hover:bg-sky-300 cursor-pointer">
+        <div className="flex items-center justify-center size-8 rounded-full bg-[#dfe3ee] ml-2 hover:bg-[#cdd5ec] cursor-pointer">
           <FaRegBell className="w-5  h-5"/>
         </div>
         
