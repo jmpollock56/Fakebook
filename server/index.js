@@ -12,6 +12,7 @@ const upload = multer();
 app.use(bodyParser.json());
 app.use(cors());
 
+
 let currentUser = {};
 
 function createCompletePosts(users, posts, likes, comments) {
