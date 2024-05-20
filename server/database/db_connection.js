@@ -14,7 +14,6 @@ const pool = mysql.createPool({ // collection of connections
 
 export async function getUsers() {
   const [rows] = await pool.query("SELECT * FROM users");
-  
   return rows;
 }
 

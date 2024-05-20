@@ -4,7 +4,6 @@ import fs from 'fs';
 import path from "path";
 import multer from "multer";
 import cors from 'cors';
-
 import { getUser, getUsers, createUser, getPosts, createPost, getLikes, addLike, removeLike, getComments, createComment, getFriends, addFriendship, removeFriendship } from "./database/db_connection.js";
 
 const app = express();
@@ -16,8 +15,6 @@ app.use(bodyParser.json());
 app.use(cors());
 
 let currentUser = {};
-
-
 
 function createCompletePosts(users, posts, likes, comments) {
     let objectPosts = [];
@@ -370,8 +367,6 @@ app.post('/api/friend/remove', async (req, res) => {
 })
 
 app.post('/api/photo/upload', upload.single('file'), photoUpload);
-
-
 
 app.listen(3000, () => {
   console.log("Server listening on port 3000");
