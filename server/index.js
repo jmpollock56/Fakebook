@@ -156,6 +156,10 @@ async function photoUpload(req, res){
   }
 }
 
+app.get("/", async (req, res) => {
+  res.send({message: "API is up and running!"});
+})
+
 app.get('/api/posts', async (req, res) => {
     const allUsers = await getUsers();        
     const allPosts = await getPosts();
@@ -172,7 +176,7 @@ app.get('/api/posts', async (req, res) => {
 app.get('/api/user', async (req, res) => {
   let user = await getUser(1);
  
-  res.json({u: user});
+  res.json({u: "hi"});
 });
 
 app.post('/api/login', async (req, res) => {
