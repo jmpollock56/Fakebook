@@ -25,6 +25,7 @@ export default function Home(){
         setCurrentUser(foundUser);
       } else {
         console.log("loggedInUser in null!!!!");
+        setCurrentUser(null);
       }
     }
     fetchCurrentUser();

@@ -5,16 +5,27 @@ import path from "path";
 import multer from "multer";
 import cors from 'cors';
 import aws from 'aws-sdk';
+import bcrypt from 'bcrypt';
 import { getUser, getUsers, createUser, getPosts, createPost, getLikes, addLike, removeLike, getComments, createComment, getFriends, addFriendship, removeFriendship } from "./database/db_connection.js";
 
 const app = express();
 const upload = multer();
+const saltRounds = 10;
 
 
 app.use(bodyParser.json());
 app.use(cors());
 
 let currentUser = {};
+
+async function hashPassword(password){
+  try{
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    return hashedPassword;
+  } catch (error){
+    console.error('Error hashing password: ', error);
+  }
+}
 
 function createCompletePosts(users, posts, likes, comments) {
     let objectPosts = [];
@@ -225,23 +236,20 @@ app.post('/api/posts/create', async (req, res) => {
 })
 
 app.post('/api/account/create', async (req, res) => {
-
   if (req.body) {
     const { firstName, lastName, email, password, birthdayMonth, birthdayDay, birthdayYear, gender } = req.body;
     const date = new Date();
     const createDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     const birthdayFull = `${birthdayYear}-${birthdayMonth}-${birthdayDay}`;
     let random_id = Math.floor(1000000 + Math.random() * 9000000);
+    const hashedPassword = await hashPassword(password);
 
-    const affectedRows = await createUser(random_id, firstName, lastName, email, gender, createDate, password, birthdayFull);
+    const affectedRows = await createUser(random_id, firstName, lastName, email, gender, createDate, hashedPassword, birthdayFull);
 
     affectedRows < 1 ? res.status(400).json({ message: 'Failed to create user' }) : res.status(201).json({ message: 'User was created' });
   } else {
     console.error("Some part of the user data is null");
   }
-
-
-
 
 })
 
