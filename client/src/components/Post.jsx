@@ -77,7 +77,7 @@ export default function Post({ post, currentUser }) {
   }
 
   async function handleComment() {
-
+    console.log('handling comment addition');
     try {
 
       const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts/comment/create', {
