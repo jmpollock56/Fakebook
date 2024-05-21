@@ -105,6 +105,7 @@ export default function Post({ post, currentUser }) {
 
       if (response.ok) {
         console.log('comment added');
+        setCommentContent("");
         
       } else {
         console.log(response);
