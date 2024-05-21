@@ -11,7 +11,7 @@ export default function Post({ post, currentUser }) {
 
   const [isLiked, setIsLiked] = useState(localStorage.getItem(`isLiked-${post.post_id}`) === "true" ? true : false);
   const [likes, setLikes] = useState(post.likes);
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState(post.comments);
   const [commentContent, setCommentContent] = useState("");
   const [postAge, setPostAge] = useState("");
   const [showCommentInput, setShowCommentInput] = useState(false)
@@ -41,8 +41,8 @@ export default function Post({ post, currentUser }) {
 
         if(response.ok){
           const postComments = await response.json();
-          setComments(postComments.comments);
-          console.log(postComments);
+          setComments(postComments);
+          
         }
       } catch(error) {
         console.error("Error fetching: " + error);
@@ -106,6 +106,7 @@ export default function Post({ post, currentUser }) {
 
       if (response.ok) {
         console.log('comment added');
+        
       } else {
         console.log(response);
       }
@@ -177,7 +178,7 @@ export default function Post({ post, currentUser }) {
             <AiOutlineLike className="rounded-full" />
             <div>{likes}</div>
           </div>
-          <div>{comments.length} Comment(s)</div>
+          <div>{/*comments.length*/} Comment(s)</div>
         </div>
 
         <hr />
@@ -193,9 +194,9 @@ export default function Post({ post, currentUser }) {
         <div className="lower-post-container">
 
           <div className="comment-section">
-            {comments.map((comment, i) => {
+            {/*comments.map((comment, i) => {
               return <Comment key={i} comment={comment} />
-            })}
+            })**/}
           </div>
           <form onSubmit={handleComment} className="add-comment">
             <img className="size-8 rounded-full mr-2" src={(currentUser.pfp) ? currentUser.pfp : "/profile_pictures/default_pfp.png"} alt="profile" />
