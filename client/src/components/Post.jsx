@@ -105,7 +105,7 @@ export default function Post({ post, currentUser }) {
 
       if (response.ok) {
         console.log('comment added');
-        setCommentContent("");
+        
         
       } else {
         console.log(response);
@@ -200,7 +200,7 @@ export default function Post({ post, currentUser }) {
           </div>
           <form onSubmit={handleComment} className="add-comment">
             <img className="size-8 rounded-full mr-2" src={(currentUser.pfp) ? currentUser.pfp : "/profile_pictures/default_pfp.png"} alt="profile" />
-            <input ref={commentInputRef} type="text" placeholder="Write a public comment..." className="comment-entry" onChange={(e) => { setCommentContent(e.target.value) }} />
+            <input ref={commentInputRef} type="text" placeholder="Write a public comment..." className="comment-entry" value={commentContent} onChange={(e) => { setCommentContent(e.target.value) }} />
           </form>
         </div>
       </div>
