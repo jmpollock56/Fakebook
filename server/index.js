@@ -276,6 +276,7 @@ app.get('/api/posts/comments/:post_id', async (req, res) => {
     const completeComments = await createCompleteComments(comments);
     res.status(200).send({comments: completeComments});
   } catch (error){
+    res.status(400).send({message: "Error fetching comments"});
     console.error(error);
   }
   
