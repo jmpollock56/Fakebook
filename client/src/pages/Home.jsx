@@ -21,7 +21,6 @@ export default function Home(){
       
       if(loggedInUser !== null){
         const foundUser = JSON.parse(loggedInUser);
-        console.log(foundUser);
         setCurrentUser(foundUser);
       } else {
         console.log("loggedInUser in null!!!!");
@@ -31,7 +30,6 @@ export default function Home(){
     fetchCurrentUser();
   },[]);
 
-  
   async function fetchPosts(){
     try{
       const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts');
@@ -60,7 +58,6 @@ export default function Home(){
     setIsCreatePost(!isCreatePost);
   }
 
-
   async function updatePosts(newPost){
     try{
       const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts/create', {
@@ -81,8 +78,6 @@ export default function Home(){
     }
   }
 
-  
-  
   return (currentUser) ? (
     <div className="static h-[100%]">
       <UserContext.Provider value={currentUser}>

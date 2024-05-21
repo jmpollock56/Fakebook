@@ -41,8 +41,7 @@ export default function Post({ post, currentUser }) {
 
         if(response.ok){
           const postComments = await response.json();
-          setComments(postComments);
-          
+          setComments(postComments.comments);
         }
       } catch(error) {
         console.error("Error fetching: " + error);
