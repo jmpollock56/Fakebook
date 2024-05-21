@@ -270,7 +270,7 @@ app.post('/api/posts/comment/create', async (req, res) => {
 
 app.get('/api/posts/comments/:post_id', async (req, res) => {
   const { post_id } = req.params;
-
+  console.log(post_id);
   try{
     const comments = await getPostComments(post_id);
     const completeComments = await createCompleteComments(comments);
