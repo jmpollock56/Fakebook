@@ -48,7 +48,7 @@ export default function Post({ post, currentUser }) {
       }
     }
     fetchComments();
-  }, [post.post_id]);
+  }, [post.post_id, comments]);
 
   async function handleLike() {
     if (!isLiked) {
@@ -93,8 +93,8 @@ export default function Post({ post, currentUser }) {
   }
 
   async function handleComment(event) {
+    event.preventDefault();
     
-    console.log('handling comment addition');
     try {
 
       const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts/comment/create', {
