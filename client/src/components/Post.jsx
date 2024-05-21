@@ -178,7 +178,7 @@ export default function Post({ post, currentUser }) {
             <AiOutlineLike className="rounded-full" />
             <div>{likes}</div>
           </div>
-          <div>{/*comments.length*/} Comment(s)</div>
+          <div>{comments.length} Comment(s)</div>
         </div>
 
         <hr />
@@ -194,9 +194,9 @@ export default function Post({ post, currentUser }) {
         <div className="lower-post-container">
 
           <div className="comment-section">
-            {/*comments.map((comment, i) => {
+            {comments.map((comment, i) => {
               return <Comment key={i} comment={comment} />
-            })**/}
+            })}
           </div>
           <form onSubmit={handleComment} className="add-comment">
             <img className="size-8 rounded-full mr-2" src={(currentUser.pfp) ? currentUser.pfp : "/profile_pictures/default_pfp.png"} alt="profile" />
