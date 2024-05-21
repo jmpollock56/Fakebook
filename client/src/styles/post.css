@@ -20,7 +20,7 @@
   height: 30px;
   background-color: #dfe3ee;
   overflow-wrap: break-word;
-  color: white;
+  color: black;
 }
 
 .comment-entry::placeholder{

@@ -262,8 +262,9 @@ app.post('/api/posts/like/remove', async (req, res) => {
 })
 
 app.post('/api/posts/comment/create', async (req, res) => {
+  console.log("create comment called - in api");
   if (req.body) {
-    console.log("create comment called - in api");
+    
     const { post_id, user_id, content } = req.body;
     const affectedRows = await createComment(post_id, user_id, content);
     affectedRows < 1 ? res.status(400).json({ message: 'Failed to create post', newPost }) : res.status(201).json({ message: 'Post created successfully' });
