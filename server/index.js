@@ -274,13 +274,11 @@ app.get('/api/posts/comments/:post_id', async (req, res) => {
   try{
     const comments = await getPostComments(post_id);
     const completeComments = await createCompleteComments(comments);
-    res.status(200).json({comments: completeComments});
+    res.status(200).send({comments: completeComments});
   } catch (error){
     console.error(error);
   }
   
-
-
 })
 
 app.post('/api/user/profile', async (req, res) => {
