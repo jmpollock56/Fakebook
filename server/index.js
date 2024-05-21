@@ -139,17 +139,18 @@ async function photoUpload(req, res){
 async function createCompleteComments(comments){
   let completeComments = [];
   const allUsers = await getUsers();
-  
+
+  const userMap = new Map(allUsers.map(user => [user.user_id, user]));
 
   for(let i = 0; i < comments.length; i++){
-    for(let j = 0; j < allUsers.length; j++){
-      if(comments[i].comment_user_id === allUsers[j].user_id){
-        completeComments.push({
-          ...comments[i],
-          user_pfp: allUsers[j].pfp,
-          user_name: `${allUsers[j].first_name} ${allUsers[j].last_name}`
-        })
-      }
+    const user = userMap.get(comments[i].comment_user_id);
+
+    if(user){
+      completeComments.push({
+        ...comments[i],
+        user_pfp: user.pfp,
+        user_name: `${user.first_name} ${user.last_name}`
+      })
     }
   }
 
