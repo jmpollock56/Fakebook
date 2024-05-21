@@ -46,20 +46,9 @@ function createCompletePosts(users, posts, likes) {
   }
 
 
-  let fullPosts = [];
-  for (let i = 0; i < objectPosts.length; i++) {
-    let postComments = [];
-    for (let j = 0; j < comments.length; j++) {
+  
 
-      if (objectPosts[i].post_id === comments[j].comment_post_id) {
-        postComments.push(comments[j]);
-      }
-    }
-
-    fullPosts.push({ ...objectPosts[i], postComments: postComments });
-  }
-
-  return fullPosts;
+  return objectPosts;
 }
 
 function createCompleteUsers(currentUser, likes, friends) {
