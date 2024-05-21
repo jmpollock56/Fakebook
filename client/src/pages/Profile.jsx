@@ -141,6 +141,7 @@ export default function Profile() {
     setIsCreatePost(!isCreatePost);
   }
 
+  //TODO: Change to only fetch posts from the users that is being access
   async function fetchPosts(){
     try{
       const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts');
@@ -338,15 +339,15 @@ export default function Profile() {
                   <button className="see-all-photos-btn">See all photos</button>
                 </div>
                 <div className="photo-display-container">
-                  <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo-top-left" />
-                  <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo" />
-                  <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo-top-right" />
-                  <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo" />
-                  <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo" />
-                  <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo" />
-                  <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo-bottom-left" />
-                  <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo" />
-                  <img src="https://i.stack.imgur.com/l60Hf.png" alt="pic" className="display-photo-bottom-right" />
+                  <img src="/profile_pictures/default_pfp.png" alt="pic" className="display-photo-top-left" />
+                  <img src="/profile_pictures/default_pfp.png" alt="pic" className="display-photo" />
+                  <img src="/profile_pictures/default_pfp.png" alt="pic" className="display-photo-top-right" />
+                  <img src="/profile_pictures/default_pfp.png" alt="pic" className="display-photo" />
+                  <img src="/profile_pictures/default_pfp.png" alt="pic" className="display-photo" />
+                  <img src="/profile_pictures/default_pfp.png" alt="pic" className="display-photo" />
+                  <img src="/profile_pictures/default_pfp.png" alt="pic" className="display-photo-bottom-left" />
+                  <img src="/profile_pictures/default_pfp.png" alt="pic" className="display-photo" />
+                  <img src="/profile_pictures/default_pfp.png" alt="pic" className="display-photo-bottom-right" />
                 </div>
               </div>
 
