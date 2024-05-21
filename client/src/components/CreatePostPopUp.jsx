@@ -25,7 +25,7 @@ export default function CreatePostPopUp({ close, user, updatePosts }) {
         </div>
 
         <div className="profile">
-          <img className="size-8 rounded-full mr-1" src={user.pfp} alt="profile" />
+          <img className="size-8 rounded-full mr-1" src={(user.pfp) ? user.pfp : "/profile_pictures/default_pfp.png"} alt="profile" />
           <div className="profile-name">{`${user.first_name} ${user.last_name}`}</div>
         </div>
 
