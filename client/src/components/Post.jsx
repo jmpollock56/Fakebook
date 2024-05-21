@@ -11,7 +11,7 @@ export default function Post({ post, currentUser }) {
 
   const [isLiked, setIsLiked] = useState(localStorage.getItem(`isLiked-${post.post_id}`) === "true" ? true : false);
   const [likes, setLikes] = useState(post.likes);
-  const [comments, setComments] = useState(post.postComments);
+  const [comments, setComments] = useState([]);
   const [commentContent, setCommentContent] = useState("");
   const [postAge, setPostAge] = useState("");
   const [showCommentInput, setShowCommentInput] = useState(false)
@@ -19,7 +19,7 @@ export default function Post({ post, currentUser }) {
   const navigateTo = useNavigate();
   const commentInputRef = useRef(null);
 
-  useEffect(() => {
+  useEffect(() => { //checks if currentUser has liked post
     for (let i = 0; i < currentUser.userLikes.length; i++) {
       if (post.post_id === currentUser.userLikes[i].likes_post_id) {
         setIsLiked(true);
@@ -33,6 +33,23 @@ export default function Post({ post, currentUser }) {
   useEffect(() => {
     createPostAge();
   });
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try{
+        const response = await fetch(`https://fakebook-server-omega.vercel.app/api/posts/comments/${post.post_id}`);
+
+        if(response.ok){
+          const postComments = await response.json();
+          setComments(postComments);
+          console.log(postComments);
+        }
+      } catch(error) {
+        console.error("Error fetching: " + error);
+      }
+    }
+    fetchComments();
+  }, []);
 
   async function handleLike() {
     if (!isLiked) {
@@ -76,7 +93,8 @@ export default function Post({ post, currentUser }) {
     }
   }
 
-  async function handleComment() {
+  async function handleComment(event) {
+    event.preventDefault();
     console.log('handling comment addition');
     try {
 

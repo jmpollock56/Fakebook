@@ -43,7 +43,7 @@ export default function NavBar() {
 
       <div className="flex items-center justify-evenly">
         <img onClick={() => {navigateTo('/home')}}  className="size-8 cursor-pointer mr-2" src="profile_pictures/fb_logo.png" alt="..." />
-        <input className="rounded-full p-1 bg-[#dfe3ee]" type="text" placeholder="Search Fakebook"/>
+        <input className="rounded-full p-1 bg-[#dfe3ee] pl-5" type="text" placeholder="Search Fakebook"/>
       </div>
 
       <div className="flex items-center h-full w-[50%] justify-center">

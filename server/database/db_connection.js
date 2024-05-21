@@ -5,10 +5,10 @@ dotenv.config();
 
 
 const pool = mysql.createPool({ // collection of connections
-  host: process.env.MYSQL_HOST,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE
+  host: 'fakebook-db.cpm6s2sguyrk.us-east-2.rds.amazonaws.com',
+  user: 'admin',
+  password: 'j4PTu6taJN',
+  database: 'fakebook'
 }).promise();   
 
 
@@ -87,6 +87,11 @@ export async function removeFriendship(currentUser, selectedUser){
   const [result] = await pool.query("DELETE FROM friends WHERE (user1_id = ? AND user2_id = ?) OR (user1_id = ? AND user2_id = ?)", [currentUser, selectedUser, selectedUser, currentUser]);
   
   return result.affectedRows;
+}
+
+export async function getPostComments(post_id){
+  const [comments] = await pool.query("SELECT * FROM comment WHERE comment_post_id = ?", [post_id]);
+  return comments;
 }
 
 

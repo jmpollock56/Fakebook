@@ -54,7 +54,7 @@ export default function Home(){
   
   useEffect(() => {
     fetchPosts(); 
-  }, []);
+  }, []); // remove if things are wonky
 
   async function handlePostCreation(){
     setIsCreatePost(!isCreatePost);

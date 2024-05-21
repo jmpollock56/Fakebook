@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from "path";
 import multer from "multer";
 import cors from 'cors';
-import { getUser, getUsers, createUser, getPosts, createPost, getLikes, addLike, removeLike, getComments, createComment, getFriends, addFriendship, removeFriendship } from "./database/db_connection.js";
+import { getUser, getUsers, createUser, getPosts, createPost, getLikes, addLike, removeLike, getComments, createComment, getFriends, addFriendship, removeFriendship, getPostComments } from "./database/db_connection.js";
 
 const app = express();
 const upload = multer();
@@ -16,18 +16,8 @@ app.use(cors());
 
 let currentUser = {};
 
-function createCompletePosts(users, posts, likes, comments) {
-    let objectPosts = [];
-
-  for (let i = 0; i < users.length; i++) {
-    for (let j = 0; j < comments.length; j++) {
-      if (users[i].user_id === comments[j].comment_user_id) {
-        comments[j].user_name = `${users[i].first_name} ${users[i].last_name}`;
-        comments[j].user_pfp = users[i].pfp;
-      }
-    }
-  }
-
+function createCompletePosts(users, posts, likes) {
+  let objectPosts = [];
 
   for (let i = 0; i < users.length; i++) {
     for (let j = 0; j < posts.length; j++) {
@@ -157,6 +147,23 @@ async function photoUpload(req, res){
   }
 }
 
+async function createCompleteComments(comments){
+  let completeComments = [];
+  const allUsers = await getUsers();
+
+  for(let i = 0; i < comments.length; i++){
+    for(let j = 0; j < allUsers.length; j++){
+      if(comments[i].comment_user_id === allUsers[j].user_id){
+        completeComments.push({
+          ...comments[i],
+          user_pfp: allUsers[j].pfp,
+          user_name: `${allUsers[j].first_name} ${allUsers[j].last_name}`
+        })
+      }
+    }
+  }
+}
+
 app.get("/", async (req, res) => {
   res.send({message: "API is up and running!"});
 })
@@ -165,9 +172,9 @@ app.get('/api/posts', async (req, res) => {
     const allUsers = await getUsers();        
     const allPosts = await getPosts();
     const allLikes = await getLikes();
-    const allComments = await getComments();
+    
 
-  let completePosts = createCompletePosts(allUsers, allPosts, allLikes, allComments);
+  let completePosts = createCompletePosts(allUsers, allPosts, allLikes);
 
   res.send(completePosts);
 
@@ -262,7 +269,6 @@ app.post('/api/posts/like/remove', async (req, res) => {
 })
 
 app.post('/api/posts/comment/create', async (req, res) => {
-  console.log("create comment called - in api");
   if (req.body) {
     
     const { post_id, user_id, content } = req.body;
@@ -271,6 +277,21 @@ app.post('/api/posts/comment/create', async (req, res) => {
   } else {
     console.error("comment is null in server");
   }
+})
+
+app.get('/api/posts/comments/:post_id', async (req, res) => {
+  const { post_id } = req.params;
+
+  try{
+    const comments = await getPostComments(post_id);
+    const completeComments = await createCompleteComments(comments);
+    res.status(200).json(completeComments);
+  } catch (error){
+    console.error(error);
+  }
+  
+
+
 })
 
 app.post('/api/user/profile', async (req, res) => {
