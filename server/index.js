@@ -139,6 +139,7 @@ async function photoUpload(req, res){
 async function createCompleteComments(comments){
   let completeComments = [];
   const allUsers = await getUsers();
+  
 
   for(let i = 0; i < comments.length; i++){
     for(let j = 0; j < allUsers.length; j++){
@@ -151,6 +152,8 @@ async function createCompleteComments(comments){
       }
     }
   }
+
+  return completeComments;
 }
 
 app.get("/", async (req, res) => {
@@ -269,10 +272,11 @@ app.post('/api/posts/comment/create', async (req, res) => {
 })
 
 app.get('/api/posts/comments/:post_id', async (req, res) => {
-  const {post_id}  = req.params;
-  console.log(post_id);
+  const { post_id }  = req.params;
+ 
   try{
     const comments = await getPostComments(post_id);
+    
     const completeComments = await createCompleteComments(comments);
     res.status(200).send({comments: completeComments});
   } catch (error){
