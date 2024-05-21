@@ -11,7 +11,7 @@ export default function Post({ post, currentUser }) {
 
   const [isLiked, setIsLiked] = useState(localStorage.getItem(`isLiked-${post.post_id}`) === "true" ? true : false);
   const [likes, setLikes] = useState(post.likes);
-  const [comments, setComments] = useState(post.comments);
+  const [comments, setComments] = useState([]);
   const [commentContent, setCommentContent] = useState("");
   const [postAge, setPostAge] = useState("");
   const [showCommentInput, setShowCommentInput] = useState(false)
@@ -49,7 +49,7 @@ export default function Post({ post, currentUser }) {
       }
     }
     fetchComments();
-  }, []);
+  }, [post.post_id]);
 
   async function handleLike() {
     if (!isLiked) {
