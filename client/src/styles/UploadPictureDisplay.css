@@ -17,10 +17,11 @@
   flex-direction: column;
   height: 500px;
   width: 800px;
-  background-color: skyblue;
+  background-color: white;
   border-radius: 10px;
   box-sizing: content-box;
   padding: 15px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   overflow-y: auto;
 }
 
@@ -30,13 +31,13 @@
   justify-content: space-between; 
   width: 100%;
   
-  background-color: skyblue;
+  background-color: white;
 }
 
 .upload-top > h1{
   font-weight: 700;
   font-size: 30px;
-  color: white;
+  color: black;
 }
 
 .upload-top > button{

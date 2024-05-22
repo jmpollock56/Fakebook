@@ -339,14 +339,15 @@
   align-items: center;
   justify-content: center;
   width: 700px;
-  background-color: skyblue;
+  background-color: white;
   height: 200px;
   border-radius: 10px;
   margin-top: 10px;
   padding: 10px;
-  color: white;
+  color: black;
   font-weight: 500;
   font-size: 20px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .add-friend-btn{
