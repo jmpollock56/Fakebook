@@ -1,3 +1,15 @@
-.profile-drop-down{
+.main-home{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  
+}
+
+.left-sidebar{
+  position: relative;
+  top: 85px;
+  display: flex;
+  flex-direction: column;
   
 }

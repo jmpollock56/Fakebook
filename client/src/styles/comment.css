@@ -7,7 +7,10 @@
 .comment-upper-container{
   display: flex;
   flex-direction: row;
+  cursor: pointer;
 }
+
+
 
 .comment-main-container{
   display: flex;
@@ -60,6 +63,10 @@
 
 .comment-user-name{
   font-size: 12px;
+}
+
+.comment-user-name:hover{
+  text-decoration: underline;
 }
 
 .comment-content{

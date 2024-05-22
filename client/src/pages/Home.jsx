@@ -8,8 +8,8 @@ import "../styles/Home.css";
 
 export const UserContext = createContext();
 
-export default function Home(){
-  
+export default function Home() {
+
   const [posts, setPosts] = useState([]);
   const [isCreatePost, setIsCreatePost] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
@@ -18,8 +18,8 @@ export default function Home(){
   useEffect(() => {
     const fetchCurrentUser = () => {
       const loggedInUser = localStorage.getItem('currentUser');
-      
-      if(loggedInUser !== null){
+
+      if (loggedInUser !== null) {
         const foundUser = JSON.parse(loggedInUser);
         setCurrentUser(foundUser);
       } else {
@@ -28,52 +28,52 @@ export default function Home(){
       }
     }
     fetchCurrentUser();
-  },[]);
+  }, []);
 
-  async function fetchPosts(){
-    try{
+  async function fetchPosts() {
+    try {
       const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts');
 
-      if(!response.ok){
+      if (!response.ok) {
         throw new Error('Network response was no ok');
       }
 
       const postData = await response.json();
-      
+
       postData.sort((a, b) => new Date(b.post_age) - new Date(a.post_age));
       setPosts(postData);
-      
-    } catch (e){
+
+    } catch (e) {
       console.error("Error fetching: " + e);
     }
 
-    
-  } 
-  
+
+  }
+
   useEffect(() => {
-    fetchPosts(); 
+    fetchPosts();
   }, []); // remove if things are wonky
 
-  async function handlePostCreation(){
+  async function handlePostCreation() {
     setIsCreatePost(!isCreatePost);
   }
 
-  async function updatePosts(newPost){
-    try{
+  async function updatePosts(newPost) {
+    try {
       const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts/create', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newPost)
       });
-      
-      if(response.ok){
+
+      if (response.ok) {
         console.log('ok');
         fetchPosts();
       } else {
         console.log('oops');
       }
-      
-    } catch (error){
+
+    } catch (error) {
       console.error("SUCH DEVASTATION!!!!!: " + error);
     }
   }
@@ -81,23 +81,41 @@ export default function Home(){
   return (currentUser) ? (
     <div className="static h-[100%]">
       <UserContext.Provider value={currentUser}>
-        <NavBar currentUser={currentUser}/>
-      
-        <div className="relative flex flex-col w-[600px] h-full mx-auto top-20 box-content">
-          <CreatePost handlePostCreation={handlePostCreation} user={currentUser}/>
-          <div className="flex flex-col mt-10">
-            {posts.map((post) =>{
-              return <Post key={post.post_id} post={post} currentUser={currentUser}/>;
-            })}
+        <NavBar currentUser={currentUser} />
+
+        <div className="main-home">
+
+          <div className="left-sidebar">
+            <div className="sidebar-option">
+              <img src={currentUser.pfp} alt="" />
+              <div className="sidebar-title">{`${currentUser}`}</div>
+            </div>
+            <div className="sidebar-option">2</div>
+            <div className="sidebar-option">3</div>
+            <div className="sidebar-option">4</div>
+            <div className="sidebar-option">5</div>
+            <div className="sidebar-option">6</div>
           </div>
-          
+
+          <div className="relative flex flex-col w-[100%] min-w-96 max-w-2xl h-full mx-auto top-20 box-content">
+            <CreatePost handlePostCreation={handlePostCreation} user={currentUser} />
+            <div className="flex flex-col mt-10">
+              {posts.map((post) => {
+                return <Post key={post.post_id} post={post} currentUser={currentUser} />;
+              })}
+            </div>
+
+          </div>
+
         </div>
-      
-        {(isCreatePost) ? <CreatePostPopUp close={handlePostCreation} user={currentUser} updatePosts={updatePosts}/> : ""}
-    
-      
-        </UserContext.Provider>
+
+
+
+        {(isCreatePost) ? <CreatePostPopUp close={handlePostCreation} user={currentUser} updatePosts={updatePosts} /> : ""}
+
+
+      </UserContext.Provider>
     </div>
-    
+
   ) : "no currentUser, please log in";
 }

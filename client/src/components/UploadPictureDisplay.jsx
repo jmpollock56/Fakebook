@@ -47,7 +47,7 @@ export default function UploadPictureDisplay({ setUploadPicture, isImage }){
       <div className="upload-main-container">
         <div className="upload-top">
           <h1>Choose profile picture</h1>
-          <button onClick={() => {setUploadPicture(false)}}>X</button>
+          <a href="#" onClick={(e) => {e.preventDefault; setUploadPicture(false);}}><img src="/close-it.png" alt="close" /></a>
         </div>
 
         <hr />

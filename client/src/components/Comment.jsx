@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/comment.css";
 import { BiLogIn } from "react-icons/bi";
 
 export default function Comment({ comment }) {
   const [commentAge, setCommentAge] = useState("");
+  const navigateTo = useNavigate();
   
   useEffect(() => {
       let now = new Date();
@@ -27,10 +29,13 @@ export default function Comment({ comment }) {
     
   },[]);
 
+  function goToProfile(){
+    navigateTo(`/user/${comment.comment_user_id}`);
+  }
   
   return (
     <div className="comment-container">
-      <div className="comment-upper-container">
+      <div className="comment-upper-container" onClick={goToProfile}>
         <img src={(comment.user_pfp) ? comment.user_pfp : "/profile_pictures/default_pfp.png"} alt="pfp" className="pfp" />
         <div className="comment-main-container">
           <div className="comment-user-name"><b>{comment.user_name}</b></div>
