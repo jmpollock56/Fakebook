@@ -4,6 +4,7 @@ import CreatePost from "../components/CreatePost";
 import Post from "../components/Post";
 import CreatePostPopUp from "../components/CreatePostPopUp";
 import ProfileHoverPopUp from "../components/ProfileHoverPopUp";
+import Contact from "../components/Contact";
 import "../styles/Home.css";
 
 export const UserContext = createContext();
@@ -13,6 +14,7 @@ export default function Home() {
   const [posts, setPosts] = useState([]);
   const [isCreatePost, setIsCreatePost] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [currentFriends, setCurrentFriends] = useState([]);
 
 
   useEffect(() => {
@@ -22,6 +24,7 @@ export default function Home() {
       if (loggedInUser !== null) {
         const foundUser = JSON.parse(loggedInUser);
         setCurrentUser(foundUser);
+        setCurrentFriends(foundUser.userFriends);
       } else {
         console.log("loggedInUser in null!!!!");
         setCurrentUser(null);
@@ -78,10 +81,10 @@ export default function Home() {
     }
   }
 
-
+console.log(currentFriends);
 
   return (currentUser) ? (
-    <div className="static h-[100%]">
+    <div className="home-container">
       <UserContext.Provider value={currentUser}>
         <NavBar currentUser={currentUser} />
 
@@ -114,14 +117,22 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="relative flex flex-col w-[80%] min-w-96 max-w-2xl h-full ml-[34%] top-20 box-content">
+          <div className="posts-container">
             <CreatePost handlePostCreation={handlePostCreation} user={currentUser} />
-            <div className="flex flex-col mt-10">
+            <div className="post-main">
               {posts.map((post) => {
                 return <Post key={post.post_id} post={post} currentUser={currentUser} />;
               })}
             </div>
+          </div>
 
+          <div className="contacts-container">
+              <div className="contacts-title">Contacts</div>
+              <div className="contact-main">
+                {currentFriends.map((friend, i) => {
+                  return <Contact key={i} friend={friend} />
+                })}
+              </div>
           </div>
 
         </div>

@@ -1,7 +1,32 @@
+.home-container{
+  position: static;
+  height: 100%;
+}
+
+.posts-container{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  min-width: 384px; 
+  max-width: 672px;
+  height: 100%;
+  margin-left: 34%;
+  top: 80px;
+  box-sizing: content-box;
+}
+
+.post-main{
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+}
+
 .main-home{
   position: relative;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .left-sidebar{
@@ -12,7 +37,6 @@
   flex-direction: column;
   margin-left: 10px;
   gap: 5px;
-  
 }
 
 .sidebar-option{
@@ -24,6 +48,8 @@
   padding: 5px;
   border-radius: 10px;
   cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .sidebar-option > img{
@@ -34,4 +60,57 @@
 
 .sidebar-option:hover{
   background-color: #dfe3ee;
+}
+
+.contacts-title{
+  color: grey;
+  font-weight: 600;
+}
+
+
+
+.contacts-container{
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  top: 80px;
+  right: 0;
+  margin-right: 10px;
+  width: 15%;
+  row-gap: 10px;
+}
+
+.contact-option{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: content-box;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.contact-option:hover{
+  background-color: #dfe3ee;
+}
+
+.contact-option > img{
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  
+}
+
+@media screen and (max-width: 600px){
+  .left-sidebar{
+    display: none;
+  }
+
+  .posts-container{
+    margin-left: 0;
+    justify-content: center;
+    width: 100%;
+  }
 }
