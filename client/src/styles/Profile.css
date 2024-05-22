@@ -4,6 +4,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  margin: 0;
 }
 
 .full-profile-container{
@@ -23,24 +24,29 @@
   align-items: center;
   width: 100%;
   background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .cover-photo-container{
   position: relative;
   background-color: black;
-  width: 1200px;
+  width: 100%;
+  max-width: 1200px;
   height: 450px;
   border-radius: 5px;
+  overflow: hidden;
 }
 
 .cover-photo{
-  width: 1200px;
+  width: 100%;
   height: 450px;
+  object-fit: cover;
 }
 
 .profile-info-container{
   display: flex;
   width: 100%;
+  max-width: 1200px;
   justify-content: space-between;
 }
 
@@ -57,7 +63,8 @@
   display: flex;
   position: relative;
   bottom: 35px;
-  width: 1200px;
+  width: 100%;
+  max-width: 1200px;
   
 }
 
@@ -113,14 +120,14 @@
 }
 
 .edit-cover-btn{
-  position: absolute;
+  position: relative;
   background-color: white;
   border-radius: 5px;
   width: 150px;
   height: 30px;
-  left: 1025px;
-  top: 400px;
-  z-index: 4000;
+  bottom: 15%;
+  left: 80%;
+  
 }
 
 .name{
@@ -167,17 +174,20 @@
 }
 
 .top-profile-container hr{
-  border-top: 2px solid black;
-  width: 1200px;
+  border-top: 1.5px solid #dfe3ee;
+  max-width: 1200px;
+  width: 100%;
+  
 }
 
 .tab-options{
   display: flex;
   flex-direction: row;
   position: relative;
-  right: 460px;
-  width: 15%;
-  margin-top: 2px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 5px 0px;
+ 
 }
 
 .option{
@@ -185,7 +195,7 @@
   align-items: center;
   justify-content: center;
   box-sizing: content-box;
-  padding: 10px;
+  padding: 5px;
   width: 60px;
   height: 40px;
   border-radius: 5px;
@@ -193,7 +203,7 @@
 }
 
 .option:hover{
-  background-color: gray;
+  background-color: #dfe3ee;
 }
 
 .bottom-profile-container{
@@ -221,6 +231,7 @@
   margin-bottom: 10px;
   border-radius: 10px;
   color: black;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .intro-item{
@@ -245,6 +256,7 @@
   border-radius: 10px;
   background-color: white;
   color: black;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .top-photos{
@@ -298,6 +310,7 @@
   border-radius: 10px;
   padding: 10px;
   color: black;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .top-friends{
@@ -340,7 +353,11 @@
   position: relative;
   right: 40px;
   top: 150px;
-  background-color: whitesmoke;
+  background-color: #1877F2;
+  color: white;
+  font-weight: 600;
+  box-sizing: content-box;
+  padding: 5px;
   height: 30px;
   width: 100px;
   border-radius: 5px;

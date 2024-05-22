@@ -355,7 +355,7 @@ export default function Profile() {
                 <div className="top-friends">
                   <div className="top-left-friends">
                     <h2>Friends</h2>
-                    <div className="amount-of-friends">{`${selectedUserFriends.length} friends`}</div>
+                    <div className="amount-of-friends">{`${selectedUserFriends.length} friend(s)`}</div>
                   </div>
 
                   <div className="see-all-container">
