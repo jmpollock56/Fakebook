@@ -2,14 +2,36 @@
   position: relative;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  
 }
 
 .left-sidebar{
-  position: relative;
-  top: 85px;
+  position: fixed;
+  width: 15%;
+  top: 80px;
   display: flex;
   flex-direction: column;
+  margin-left: 10px;
+  gap: 5px;
   
+}
+
+.sidebar-option{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  box-sizing: content-box;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.sidebar-option > img{
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+}
+
+.sidebar-option:hover{
+  background-color: #dfe3ee;
 }

@@ -78,6 +78,8 @@ export default function Home() {
     }
   }
 
+
+
   return (currentUser) ? (
     <div className="static h-[100%]">
       <UserContext.Provider value={currentUser}>
@@ -87,17 +89,32 @@ export default function Home() {
 
           <div className="left-sidebar">
             <div className="sidebar-option">
-              <img src={currentUser.pfp} alt="" />
-              <div className="sidebar-title">{`${currentUser}`}</div>
+              <img src={(currentUser.pfp) ? currentUser.pfp : "/profile_pictures/default_pfp.png"} alt="" />
+              <div className="sidebar-title">{`${currentUser.first_name} ${currentUser.last_name}`}</div>
             </div>
-            <div className="sidebar-option">2</div>
-            <div className="sidebar-option">3</div>
-            <div className="sidebar-option">4</div>
-            <div className="sidebar-option">5</div>
-            <div className="sidebar-option">6</div>
+            <div className="sidebar-option">
+              <img src="/friend.png" alt="friends" />
+              <div className="sidebar-title">Friends</div>
+            </div>
+            <div className="sidebar-option">
+              <img src="/memories.png" alt="" />
+              <div className="sidebar-title">Memories</div>
+            </div>
+            <div className="sidebar-option">
+              <img src="/saved.png" alt="" />
+              <div className="sidebar-title">Saved</div>
+            </div>
+            <div className="sidebar-option">
+              <img src="/video.png" alt="" />
+              <div className="sidebar-title">Video</div>
+            </div>
+            <div className="sidebar-option">
+              <img src="/marketplace.png" alt="" />
+              <div className="sidebar-title">Marketplace</div>
+            </div>
           </div>
 
-          <div className="relative flex flex-col w-[100%] min-w-96 max-w-2xl h-full mx-auto top-20 box-content">
+          <div className="relative flex flex-col w-[80%] min-w-96 max-w-2xl h-full ml-[34%] top-20 box-content">
             <CreatePost handlePostCreation={handlePostCreation} user={currentUser} />
             <div className="flex flex-col mt-10">
               {posts.map((post) => {

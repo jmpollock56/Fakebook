@@ -39,7 +39,7 @@ export default function NavBar() {
 
   return (
    <header className="bg-white h-10 w-full fixed box-content p-2 z-10 shadow-xl">
-    <nav className="flex justify-between items-center w-[98%] h-[100%] mx-auto">
+    <nav className="flex justify-between items-center w-[99%] h-[100%]">
 
       <div className="flex items-center justify-evenly">
         <img onClick={() => {navigateTo('/home')}}  className="size-10 cursor-pointer mr-2" src="/profile_pictures/fb_logo.png" alt="..." />
