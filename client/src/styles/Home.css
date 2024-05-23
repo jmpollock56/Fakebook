@@ -7,12 +7,11 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 80%;
-  min-width: 384px; 
-  max-width: 672px;
+  width: 50%;
+  min-width: 200px; 
+  max-width: 680px;
   height: 100%;
-  margin-left: 34%;
-  top: 80px;
+  margin-left: 32%;
   box-sizing: content-box;
 }
 
@@ -24,18 +23,19 @@
 
 .main-home{
   position: relative;
+  top: 80px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  
 }
 
 .left-sidebar{
   position: fixed;
-  width: 15%;
-  top: 80px;
+  width: 20%;
+  margin-left: 5px;
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
   gap: 5px;
 }
 
@@ -73,9 +73,10 @@
   position: fixed;
   display: flex;
   flex-direction: column;
-  top: 80px;
+  
   right: 0;
   margin-right: 10px;
+  margin-left: 100px;
   width: 15%;
   row-gap: 10px;
 }
@@ -103,7 +104,9 @@
   
 }
 
-@media screen and (max-width: 600px){
+
+
+@media screen and (max-width: 690px){
   .left-sidebar{
     display: none;
   }
@@ -111,6 +114,22 @@
   .posts-container{
     margin-left: 0;
     justify-content: center;
-    width: 100%;
+    width: 80%;
   }
+
+  
 }
+
+@media screen and (max-width: 450px){
+  .contacts-container{
+    display: none;
+  }
+
+  .posts-container{
+    display: flex;
+    justify-content: center;
+    width: 98%;
+  }
+  
+}
+

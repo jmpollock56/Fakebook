@@ -38,56 +38,56 @@ export default function NavBar() {
 
 
   return (
-   <header className="bg-white h-10 w-full fixed box-content p-2 z-10 shadow-xl">
-    <nav className="flex justify-between items-center w-[99%] h-[100%]">
+   <header className="header-container">
+    <nav className="nav-container">
 
-      <div className="flex items-center justify-evenly">
-        <img onClick={() => {navigateTo('/home')}}  className="size-10 cursor-pointer mr-2" src="/profile_pictures/fb_logo.png" alt="..." />
-        <input className="rounded-full p-1 bg-[#dfe3ee] pl-5" type="text" placeholder="Search Fakebook"/>
+      <div className="left-nav">
+        <img onClick={() => {navigateTo('/home')}}  className="nav-logo" src="/profile_pictures/fb_logo.png" alt="..." />
+        <input className="nav-search" type="text" placeholder="Search Fakebook"/>
       </div>
 
-      <div className="flex items-center h-full w-[50%] justify-center">
+      <div className="center-nav">
 
-        <div onClick={() => {navigateTo('/home')}} className="flex justify-center h-9 w-28 items-center hover:bg-[#dfe3ee] rounded-md cursor-pointer">
-          <CiHome className="size-6"/> 
+        <div onClick={() => {navigateTo('/home')}} className="nav-icon">
+          <CiHome className="inner-nav-icon"/> 
         </div>
 
-        <div className="flex justify-center items-center h-9 w-28 hover:bg-[#dfe3ee] rounded-md cursor-pointer">
-          <FaUserFriends className="size-6"/>
+        <div className="nav-icon">
+          <FaUserFriends className="inner-nav-icon"/>
         </div>
 
-        <div className="flex justify-center items-center  h-9 w-28 hover:bg-[#dfe3ee] rounded-md cursor-pointer">
-          <MdOndemandVideo className="size-6"/>
+        <div className="nav-icon">
+          <MdOndemandVideo className="inner-nav-icon"/>
         </div>
 
-        <div className="flex justify-center items-center  h-9 w-28 hover:bg-[#dfe3ee] rounded-md cursor-pointer">
-          <CiShop className="size-6"/>
-        </div>
+        <div className="nav-icon">
+          <CiShop className="inner-nav-icon"/>
+        </div>  
 
-        <div className="flex justify-center items-center  h-9 w-28 hover:bg-[#dfe3ee] rounded-md cursor-pointer">
-         <GrGroup className="size-5"/>
+        <div className="nav-icon">
+         <GrGroup className="inner-nav-icon"/>
         </div>
             
       </div>
 
-      <div className="flex items-center"> 
+      <div className="right-nav"> 
 
-        <div className="flex items-center justify-center size-10 rounded-full bg-[#dfe3ee] hover:bg-[#cdd5ec] cursor-pointer">
+        <div className="right-nav-icon">
           <CgMenuGridO className="size-7"/>
         </div>
 
-        <div className="flex items-center justify-center size-10 rounded-full bg-[#dfe3ee] ml-2 hover:bg-[#cdd5ec] cursor-pointer">
+        <div className="right-nav-icon">
           <BiMessageRoundedDetail className="size-7"/>
         </div>
 
-        <div className="flex items-center justify-center size-10 rounded-full bg-[#dfe3ee] ml-2 hover:bg-[#cdd5ec] cursor-pointer">
+        <div className="right-nav-icon">
           <FaRegBell className="size-7"/>
         </div>
         
 
-        <div className="relative ml-2 cursor-pointer" onClick={() => {setIsDropDownMenu(!isDropDownMenu)}}>
-          <img className="size-10 rounded-full" src={(currentUser.pfp) ? currentUser.pfp : "/profile_pictures/default_pfp.png"} alt="profile" />
-          <div className="absolute bottom-0 right-0 rounded-full bg-white">
+        <div className="profile-nav" onClick={() => {setIsDropDownMenu(!isDropDownMenu)}}>
+          <img className="profile-icon" src={(currentUser.pfp) ? currentUser.pfp : "/profile_pictures/default_pfp.png"} alt="profile" />
+          <div className="profile-arrow">
             <IoIosArrowDown className="h-3 w-3"/>
           </div>
           {(isDropDownMenu) ? <ProfileIconDropdown className="profile-drop-down"/> : ""}
