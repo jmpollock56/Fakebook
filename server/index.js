@@ -51,17 +51,6 @@ function createCompletePosts(users, posts, likes) {
   return objectPosts;
 }
 
-async function friendInfo(userFriends){
-  let fullFriends = [];
-
-  for(let i = 0; i < userFriends.length; i++){
-    let friend = await getUser(userFriends[i]);
-    fullFriends.push(friend);
-  }
-  console.log(fullFriends);
-  return fullFriends;
-}
-
 async function createCompleteUsers(currentUser, likes, friends) {
   let currentUserLikes = [];
   let currentUserFriends = [];
@@ -80,9 +69,9 @@ async function createCompleteUsers(currentUser, likes, friends) {
     }
   }
 
-  let fullFriendsList = await friendInfo(currentUserFriends);
+  
 
-  return { ...currentUser, userLikes: currentUserLikes, userFriends: fullFriendsList };
+  return { ...currentUser, userLikes: currentUserLikes, userFriends: currentUserFriends };
 }
 
 async function createUserWithFriends(selectedUser) {

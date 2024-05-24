@@ -24,7 +24,7 @@ export default function Home() {
       if (loggedInUser !== null) {
         const foundUser = JSON.parse(loggedInUser);
         setCurrentUser(foundUser);
-        setCurrentFriends(foundUser.userFriends);
+        //setCurrentFriends(foundUser.userFriends);
       } else {
         console.log("loggedInUser in null!!!!");
         setCurrentUser(null);
