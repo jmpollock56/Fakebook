@@ -55,7 +55,7 @@ async function friendInfo(userFriends){
   let fullFriends = [];
 
   for(let i = 0; i < userFriends.length; i++){
-    let friend = await getUser(fullFriends[i]);
+    let friend = await getUser(userFriends[i]);
     fullFriends.push(friend);
   }
   console.log(fullFriends);
