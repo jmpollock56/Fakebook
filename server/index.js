@@ -65,6 +65,7 @@ async function createCompleteUsers(currentUser, likes, friends) {
 
     if (currentUser.user_id === friends[i].user1_id) {
       let user2 = await getUser(friends[i].user2_id);
+      console.log(user2);
       currentUserFriends.push({
         user_id: user2.user_id,
         user_name: `${user2.first_name} ${user2.last_name}`,
@@ -73,6 +74,7 @@ async function createCompleteUsers(currentUser, likes, friends) {
 
     } else if (currentUser.user_id === friends[i].user2_id) {
       let user1 = await getUser(friends[i].user1_id);
+      console.log(user1);
       currentUserFriends.push({
         user_id: user1.user_id,
         user_name: `${user1.first_name} ${user1.last_name}`,
@@ -81,7 +83,7 @@ async function createCompleteUsers(currentUser, likes, friends) {
     }
   }
 
-  console.log(currentUserFriends);
+  
   return { ...currentUser, userLikes: currentUserLikes, userFriends: currentUserFriends };
 }
 
@@ -111,7 +113,6 @@ async function createUserWithFriends(selectedUser) {
     }
   }
 
-  console.log(selectedUserFriends);
 
   return { ...selectedUser, userFriends: selectedUserFriends };
 }
