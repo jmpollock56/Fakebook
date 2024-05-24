@@ -18,7 +18,7 @@ export async function getUsers() {
 }
 
 export async function getUser(id){
-  const [rows] = await pool.query(`
+  const {rows} = await pool.query(`
   SELECT *
   FROM users
   WHERE user_id = ?`, [id]);
