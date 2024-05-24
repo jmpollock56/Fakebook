@@ -137,7 +137,7 @@ async function photoUpload(req, res){
 }
 
 async function createCompleteComments(comments){
-  console.log(`init comment ${comments}`);
+  
   let completeComments = [];
   const allUsers = await getUsers();
 
@@ -154,10 +154,22 @@ async function createCompleteComments(comments){
       })
     }
   }
-
-  console.log(`after service ${completeComments}`);
-
   return completeComments;
+}
+
+async function createNewComment(post_id, user_id, content){
+  const user = await getUser(user_id);
+
+  return {
+    post_id: post_id, 
+    user_id: user_id, 
+    content: content,
+    user_pfp: user.pfp,
+    user_name: `${user.first_name} ${user.last_name}`
+  }
+  
+  
+
 }
 
 app.get("/", async (req, res) => {
@@ -267,12 +279,8 @@ app.post('/api/posts/like/remove', async (req, res) => {
 app.post('/api/posts/comment/create', async (req, res) => {
   if (req.body) {
     const { post_id, user_id, content } = req.body;
-    const newComment = {post_id: post_id, user_id: user_id, content: content};
+    const completeNewComment = await createNewComment(post_id, user_id, content);
     const affectedRows = await createComment(post_id, user_id, content);
-
-    let commentArry = [];
-    commentArry.push(newComment);
-    const completeNewComment = await createCompleteComments(commentArry);
     affectedRows < 1 ? res.status(400).json({ message: 'Failed to create post', newPost }) : res.status(201).json({ message: 'Post created successfully', newComment: completeNewComment});
     
   } else {
