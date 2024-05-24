@@ -159,17 +159,14 @@ async function createCompleteComments(comments){
 
 async function createNewComment(post_id, user_id, content){
   const user = await getUser(user_id);
-
+  console.log(user);
   return {
     post_id: post_id, 
     user_id: user_id, 
     content: content,
     user_pfp: user.pfp,
     user_name: `${user.first_name} ${user.last_name}`
-  }
-  
-  
-
+  };
 }
 
 app.get("/", async (req, res) => {
