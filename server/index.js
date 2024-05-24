@@ -264,8 +264,13 @@ app.post('/api/posts/like/remove', async (req, res) => {
 app.post('/api/posts/comment/create', async (req, res) => {
   if (req.body) {
     const { post_id, user_id, content } = req.body;
+    const newComment = {post_id: post_id, user_id: user_id, content: content};
     const affectedRows = await createComment(post_id, user_id, content);
-    affectedRows < 1 ? res.status(400).json({ message: 'Failed to create post', newPost }) : res.status(201).json({ message: 'Post created successfully'});
+
+    let commentArry = [];
+    commentArry.push(newComment);
+    const completeNewComment = await createCompleteComments(commentArry);
+    affectedRows < 1 ? res.status(400).json({ message: 'Failed to create post', newPost }) : res.status(201).json({ message: 'Post created successfully', newComment: completeNewComment});
     
   } else {
     console.error("comment is null in server");
