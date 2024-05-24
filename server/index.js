@@ -51,7 +51,7 @@ function createCompletePosts(users, posts, likes) {
   return objectPosts;
 }
 
-function createCompleteUsers(currentUser, likes, friends) {
+async function createCompleteUsers(currentUser, likes, friends) {
   let currentUserLikes = [];
   let currentUserFriends = [];
 
@@ -62,13 +62,16 @@ function createCompleteUsers(currentUser, likes, friends) {
   }
 
   for (let i = 0; i < friends.length; i++) {
+
     if (currentUser.user_id === friends[i].user1_id) {
-      currentUserFriends.push(friends[i].user2_id);
+      let user2 = await getUser(friends[i].user2_id);
+      currentUserFriends.push(user2);
+
     } else if (currentUser.user_id === friends[i].user2_id) {
-      currentUserFriends.push(friends[i].user1_id);
+      let user1 = await getUser(friends[i].user1_id);
+      currentUserFriends.push(user1);
     }
   }
-
 
 
   return { ...currentUser, userLikes: currentUserLikes, userFriends: currentUserFriends };
