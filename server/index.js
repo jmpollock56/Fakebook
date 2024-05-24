@@ -81,7 +81,7 @@ async function createCompleteUsers(currentUser, likes, friends) {
     }
   }
 
-
+  console.log(currentUserFriends);
   return { ...currentUser, userLikes: currentUserLikes, userFriends: currentUserFriends };
 }
 
