@@ -48,7 +48,7 @@ export default function Post({ post, currentUser }) {
       }
     }
     fetchComments();
-  }, [post.post_id, comments]);
+  }, [post.post_id]);
 
   async function handleLike() {
     if (!isLiked) {

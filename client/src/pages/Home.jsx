@@ -81,6 +81,8 @@ export default function Home() {
     }
   }
 
+  console.log(currentUser);
+
   return (currentUser) ? (
     <div className="home-container">
       <UserContext.Provider value={currentUser}>
