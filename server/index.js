@@ -51,7 +51,7 @@ function createCompletePosts(users, posts, likes) {
   return objectPosts;
 }
 
-async function createCompleteUsers(currentUser, likes, friends) {
+function createCompleteUsers(currentUser, likes, friends) {
   let currentUserLikes = [];
   let currentUserFriends = [];
 
@@ -69,7 +69,7 @@ async function createCompleteUsers(currentUser, likes, friends) {
     }
   }
 
-  
+
 
   return { ...currentUser, userLikes: currentUserLikes, userFriends: currentUserFriends };
 }
