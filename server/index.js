@@ -137,6 +137,7 @@ async function photoUpload(req, res){
 }
 
 async function createCompleteComments(comments){
+  console.log(`init comment ${comments}`);
   let completeComments = [];
   const allUsers = await getUsers();
 
@@ -153,6 +154,8 @@ async function createCompleteComments(comments){
       })
     }
   }
+
+  console.log(`after service ${completeComments}`);
 
   return completeComments;
 }

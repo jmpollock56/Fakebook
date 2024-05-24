@@ -105,6 +105,8 @@ export default function Post({ post, currentUser }) {
 
       if (response.ok) {
         console.log('comment added');
+        const commentMessage = await response.json();
+        console.log(commentMessage.newComment[0]);
         setCommentContent('');
         commentInputRef.current.blur();
       } else {
