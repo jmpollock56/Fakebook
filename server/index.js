@@ -80,7 +80,7 @@ async function createCompleteUsers(currentUser, likes, friends) {
     }
   }
 
-  let fullFriendsList = await friendInfo(userFriends);
+  let fullFriendsList = await friendInfo(currentUserFriends);
 
   return { ...currentUser, userLikes: currentUserLikes, userFriends: fullFriendsList };
 }
