@@ -163,7 +163,7 @@ async function createNewComment(post_id, user_id, content){
   return {
     post_id: post_id, 
     user_id: user_id, 
-    content: content,
+    comment_content: content,
     user_pfp: user[0].pfp,
     user_name: `${user[0].first_name} ${user[0].last_name}`
   };
