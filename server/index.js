@@ -265,8 +265,9 @@ app.post('/api/posts/comment/create', async (req, res) => {
   if (req.body) {
     
     const { post_id, user_id, content } = req.body;
-    console.log(req.body);
-    let newComment = await createCompleteComments([req.body]);
+    let commentList = [...req.body]
+    console.log(commentList);
+    let newComment = await createCompleteComments(commentList);
     const affectedRows = await createComment(post_id, user_id, content);
     affectedRows < 1 ? res.status(400).json({ message: 'Failed to create post', newPost }) : res.status(201).json({ message: 'Post created successfully', newComment: newComment });
     console.log(newComment);
