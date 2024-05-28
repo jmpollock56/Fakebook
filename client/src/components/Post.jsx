@@ -97,7 +97,7 @@ export default function Post({ post, currentUser }) {
     
     try {
 
-      const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts/comment/create', {
+      const response = await fetch('http://localhost:3000/api/posts/comment/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_id: currentUser.user_id, post_id: post.post_id, content: commentContent })
@@ -187,9 +187,13 @@ export default function Post({ post, currentUser }) {
         <hr />
 
         <div className="flex justify-evenly items-center mt-1 mb-1 box-content h-10">
-          <div style={{ color: isLiked ? 'blue' : 'black' }} className="flex justify-center items-center h-full w-1/3 hover:bg-[#dfe3ee] rounded-md cursor-pointer" onClick={handleLike}>Like</div>
-          <div onClick={scrollToComment} className="flex justify-center items-center h-full w-1/3 hover:bg-[#dfe3ee] rounded-md cursor-pointer">Comment</div>
-          <div className="flex justify-center items-center h-full w-1/3 hover:bg-[#dfe3ee] rounded-md cursor-pointer">Share</div>
+          <div style={{  
+            color: isLiked ? '#3b5998' : 'black',
+            border: isLiked ? '1px solid #3b5998' : 'none',
+            backgroundColor: isLiked ? '#dfe3ee' : 'white'
+           }} className="flex justify-center items-center h-full w-1/3 hover:bg-[#dfe3ee] rounded-md cursor-pointer font-semibold" onClick={handleLike}>Like</div>
+          <div onClick={scrollToComment} className="flex justify-center items-center h-full w-1/3 hover:bg-[#dfe3ee] rounded-md cursor-pointer font-semibold">Comment</div>
+          <div className="flex justify-center items-center h-full w-1/3 hover:bg-[#dfe3ee] rounded-md cursor-pointer font-semibold">Share</div>
         </div>
 
         <hr />

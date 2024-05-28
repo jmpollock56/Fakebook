@@ -96,7 +96,7 @@ export default function Profile() {
       
       try {
         
-        const response = await fetch('https://fakebook-server-omega.vercel.app/api/friend/add', {
+        const response = await fetch('http://localhost:3000/api/friend/add', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ currentUser: currentUser.user_id, selectedUser: selectedUser.user_id }),
@@ -113,7 +113,7 @@ export default function Profile() {
       
       try {
         
-        const response = await fetch('https://fakebook-server-omega.vercel.app/api/friend/remove', {
+        const response = await fetch('http://localhost:3000/api/friend/remove', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ currentUser: currentUser.user_id, selectedUser: selectedUser.user_id }),
@@ -144,7 +144,7 @@ export default function Profile() {
   //TODO: Change to only fetch posts from the users that is being access
   async function fetchPosts(){
     try{
-      const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts');
+      const response = await fetch('http://localhost:3000/api/posts');
 
       if(!response.ok){
         throw new Error('Network response was no ok');
@@ -165,7 +165,7 @@ export default function Profile() {
   
   async function updatePosts(newPost){
     try{
-      const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts/create', {
+      const response = await fetch('http://localhost:3000/api/posts/create', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(newPost)
@@ -188,40 +188,31 @@ export default function Profile() {
     const fetchInitUserProfile = async () => {
        
       try {
-        const response = await fetch('https://fakebook-server-omega.vercel.app/api/user/profile', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ user_id: user_id })
-        });
+        const response = await fetch(`http://localhost:3000/api/user/profile/${user_id}`);
 
         if (response.ok) {
           console.log(`Retrieved ${user_id} from db`);
 
-          const userProfileData = await response.json();
-          const userFromDB = userProfileData.selectedUser;
-
-          
+          const userFromDB = await response.json();
+        
           setSelectedUser(userFromDB);
           setSelectedUserFriends(userFromDB.userFriends);
-
-
           findFriend();
           checkIfLoggedInUserProfile();
-
         }
-
-
       } catch (error) {
-
+        console.error(error);
       }
     }
     fetchInitUserProfile();
   }, [selectedUser.user_id, user_id, isFriend]);
 
+  console.log(selectedUser);
+
   useEffect(() => {
     const fetchUserPosts = async () => {
       try {
-        const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts');
+        const response = await fetch('http://localhost:3000/api/posts');
 
         if (!response.ok) {
           throw new Error('Network response was no ok');

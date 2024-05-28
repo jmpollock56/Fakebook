@@ -90,6 +90,7 @@
   box-sizing: content-box;
   padding: 5px;
   border-radius: 10px;
+  color: black;
 }
 
 .contact-option:hover{

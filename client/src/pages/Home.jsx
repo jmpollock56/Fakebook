@@ -35,7 +35,7 @@ export default function Home() {
 
   async function fetchPosts() {
     try {
-      const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts');
+      const response = await fetch('http://localhost:3000/api/posts');
 
       if (!response.ok) {
         throw new Error('Network response was no ok');
@@ -63,7 +63,7 @@ export default function Home() {
 
   async function updatePosts(newPost) {
     try {
-      const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts/create', {
+      const response = await fetch('http://localhost:3000/api/posts/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newPost)
@@ -81,7 +81,6 @@ export default function Home() {
     }
   }
 
-  console.log(currentUser);
 
   return (currentUser) ? (
     <div className="home-container">

@@ -46,14 +46,13 @@ function createCompletePosts(users, posts, likes) {
   }
 
 
-  
+
 
   return objectPosts;
 }
 
-async function createCompleteUsers(currentUser, likes, friends) {
+async function createCompleteUsers(currentUser, likes) {
   let currentUserLikes = [];
-  let currentUserFriends = [];
 
   for (let i = 0; i < likes.length; i++) {
     if (currentUser.user_id === likes[i].likes_user_id) {
@@ -61,30 +60,7 @@ async function createCompleteUsers(currentUser, likes, friends) {
     }
   }
 
-  for (let i = 0; i < friends.length; i++) {
-
-    if (currentUser.user_id === friends[i].user1_id) {
-      let user2 = await getUser(friends[i].user2_id);
-      console.log(user2);
-      currentUserFriends.push({
-        user_id: user2.user_id,
-        user_name: `${user2.first_name} ${user2.last_name}`,
-        pfp: user2.pfp
-      });
-
-    } else if (currentUser.user_id === friends[i].user2_id) {
-      let user1 = await getUser(friends[i].user1_id);
-      console.log(user1);
-      currentUserFriends.push({
-        user_id: user1.user_id,
-        user_name: `${user1.first_name} ${user1.last_name}`,
-        pfp: user1.pfp
-      });
-    }
-  }
-
-  
-  return { ...currentUser, userLikes: currentUserLikes, userFriends: currentUserFriends };
+  return { ...currentUser, userLikes: currentUserLikes};
 }
 
 async function createUserWithFriends(selectedUser) {
@@ -96,8 +72,6 @@ async function createUserWithFriends(selectedUser) {
     if (selectedUser.user_id === friends[i].user1_id) {
       selectedUserFriends.push({ user_id: friends[i].user2_id });
 
-      
-
     } else if (selectedUser.user_id === friends[i].user2_id) {
       selectedUserFriends.push({ user_id: friends[i].user1_id });
     }
@@ -108,27 +82,29 @@ async function createUserWithFriends(selectedUser) {
       if (selectedUserFriends[i].user_id == users[j].user_id) {
         selectedUserFriends[i].name = `${users[j].first_name} ${users[j].last_name}`;
         selectedUserFriends[i].user_pfp = users[j].pfp;
-        
+
       }
     }
   }
 
-
-  return { ...selectedUser, userFriends: selectedUserFriends };
+  selectedUser.userFriends = selectedUserFriends;
+  console.log("selectedUser.........");
+  console.log(selectedUser);
+  return selectedUser;
 }
 
-async function photoUpload(req, res){
-  try{
+async function photoUpload(req, res) {
+  try {
     const file = req.file;
 
-    if(!file){
+    if (!file) {
       return res.status(400).send('No file Uploaded');
     }
 
     const photoDirectory = 'photos'; //name of folder with photos
 
     //make directory if no there already
-    if(!fs.existsSync(photoDirectory)){
+    if (!fs.existsSync(photoDirectory)) {
       fs.mkdirSync(photoDirectory);
     }
 
@@ -137,9 +113,9 @@ async function photoUpload(req, res){
     fs.writeFileSync(filePath, file.buffer);
     console.log('file saved: ', filePath);
 
-    
 
-    
+
+
 
     return res.status(200).send('Photo uploaded');
   } catch {
@@ -148,17 +124,17 @@ async function photoUpload(req, res){
   }
 }
 
-async function createCompleteComments(comments){
-  
+async function createCompleteComments(comments) {
+
   let completeComments = [];
   const allUsers = await getUsers();
 
   const userMap = new Map(allUsers.map(user => [user.user_id, user]));
 
-  for(let i = 0; i < comments.length; i++){
+  for (let i = 0; i < comments.length; i++) {
     const user = userMap.get(comments[i].comment_user_id);
 
-    if(user){
+    if (user) {
       completeComments.push({
         ...comments[i],
         user_pfp: user.pfp,
@@ -169,13 +145,13 @@ async function createCompleteComments(comments){
   return completeComments;
 }
 
-async function createNewComment(post_id, user_id, content){
+async function createNewComment(post_id, user_id, content) {
   const user = await getUser(user_id);
 
   let date = new Date();
   return {
-    comment_post_id: post_id, 
-    comment_user_id: user_id, 
+    comment_post_id: post_id,
+    comment_user_id: user_id,
     comment_content: content,
     user_pfp: user[0].pfp,
     user_name: `${user[0].first_name} ${user[0].last_name}`,
@@ -184,14 +160,14 @@ async function createNewComment(post_id, user_id, content){
 }
 
 app.get("/", async (req, res) => {
-  res.send({message: "API is up and running!"});
+  res.send({ message: "API is up and running!" });
 })
 
 app.get('/api/posts', async (req, res) => {
-    const allUsers = await getUsers();        
-    const allPosts = await getPosts();
-    const allLikes = await getLikes();
-    
+  const allUsers = await getUsers();
+  const allPosts = await getPosts();
+  const allLikes = await getLikes();
+
 
   let completePosts = createCompletePosts(allUsers, allPosts, allLikes);
 
@@ -202,15 +178,15 @@ app.get('/api/posts', async (req, res) => {
 
 app.get('/api/user', async (req, res) => {
   let user = await getUser(1);
- 
-  res.json({u: user});
+
+  res.json({ u: user });
 });
 
-app.post('/api/login', async (req, res) => {
+app.post('/api/login', async (req, res) => {                                                
   const { emailOrPhone, password } = req.body;
   const users = await getUsers();
   const likes = await getLikes();
-  const friends = await getFriends();
+  
 
   let isUser = false;
 
@@ -224,13 +200,12 @@ app.post('/api/login', async (req, res) => {
     }
   }
 
-  const completeUser = createCompleteUsers(currentUser, likes, friends);
-
+  const likesUser = await createCompleteUsers(currentUser, likes);
+  
+  const completeUser = await createUserWithFriends(likesUser);
 
   if (isUser) {
-
-    res.status(200).json({ message: 'Login success', currentUser: completeUser });
-
+    res.status(200).json({ message: 'Login success', currentUser: completeUser }); 
   } else {
     res.status(401).json({ message: "Invalid Login" });
   }
@@ -257,7 +232,7 @@ app.post('/api/account/create', async (req, res) => {
     const createDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     const birthdayFull = `${birthdayYear}-${birthdayMonth}-${birthdayDay}`;
     let random_id = Math.floor(1000000 + Math.random() * 9000000);
-    
+
 
     const affectedRows = await createUser(random_id, firstName, lastName, email, gender, createDate, password, birthdayFull);
 
@@ -292,52 +267,38 @@ app.post('/api/posts/comment/create', async (req, res) => {
     const { post_id, user_id, content } = req.body;
     const completeNewComment = await createNewComment(post_id, user_id, content);
     const affectedRows = await createComment(post_id, user_id, content);
-    affectedRows < 1 ? res.status(400).json({ message: 'Failed to create post', newPost }) : res.status(201).json({ message: 'Post created successfully', newComment: completeNewComment});
-    
+    affectedRows < 1 ? res.status(400).json({ message: 'Failed to create post', newPost }) : res.status(201).json({ message: 'Post created successfully', newComment: completeNewComment });
+
   } else {
     console.error("comment is null in server");
   }
 })
 
 app.get('/api/posts/comments/:post_id', async (req, res) => {
-  const { post_id }  = req.params;
- 
-  try{
+  const { post_id } = req.params;
+
+  try {
     const comments = await getPostComments(post_id);
     const completeComments = await createCompleteComments(comments);
-    res.status(200).send({comments: completeComments});
-  } catch (error){
-    res.status(400).send({message: error});
+    res.status(200).send({ comments: completeComments });
+  } catch (error) {
+    res.status(400).send({ message: error });
     console.error(error);
   }
-  
+
 })
 
-app.post('/api/user/profile', async (req, res) => {
-  const allUsers = await getUsers();
+app.get('/api/user/profile/:user_id', async (req, res) => {
+  const { user_id } = req.params; // get id from params
 
-
-  if (req.body) {
-    const { user_id } = req.body;
-    let user = {};
-
-    for (let i = 0; i < allUsers.length; i++) {
-      if (allUsers[i].user_id == user_id) {
-        user = allUsers[i];
-      }
-    }
-
-    let selectedUser = await createUserWithFriends(user);
-
-    res.status(200).json({ selectedUser: selectedUser });
-
-  } else {
-    res.status(401).json({ message: "profile load error" });
+  try{
+    const user = await getUser(user_id); // pull whole user from db
+    console.log("user", user);
+    const selectedUser = await createUserWithFriends(user[0]); // send off to add friends to object
+    res.status(200).json(selectedUser); // send back to front end
+  } catch (error){
+    res.status(401).json({ message: error });
   }
-
-
-
-
 })
 
 app.post('/api/friend/add', async (req, res) => {
