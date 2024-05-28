@@ -5,10 +5,10 @@ dotenv.config();
 
 
 const pool = mysql.createPool({ // collection of connections
-  host: 'fakebook-db.cpm6s2sguyrk.us-east-2.rds.amazonaws.com',
-  user: 'admin',
-  password: 'j4PTu6taJN',
-  database: 'fakebook'
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE
 }).promise();   
 
 

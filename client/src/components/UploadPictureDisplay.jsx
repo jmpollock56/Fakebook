@@ -11,7 +11,7 @@ export default function UploadPictureDisplay({ setUploadPicture, isImage }){
     console.log(formData);
 
     try{
-      const response = await fetch('http://localhost:3000/api/photo/upload', {
+      const response = await fetch('https://fakebook-server-omega.vercel.app/api/photo/upload', {
         method: 'POST',
         body: formData  
       });

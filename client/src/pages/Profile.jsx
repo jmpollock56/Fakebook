@@ -7,9 +7,11 @@ import Post from "../components/Post";
 import FriendProfileDisplay from "../components/FriendProfileDisplay";
 import ProfileFriendsTab from "../components/ProfileFriendsTab";
 import UploadPictureDisplay from "../components/UploadPictureDisplay";
+import EditProfilePopUp from "../components/EditProfilePopUp";
 import { GiHouse } from "react-icons/gi";
 import { FaCamera } from "react-icons/fa";
 import "../styles/Profile.css";
+
 
 
 
@@ -25,6 +27,7 @@ export default function Profile() {
   const [isFriend, setIsFriend] = useState(false);
   const [showFriendsTab, setShowFriendsTab] = useState(false);
   const [uploadPicture, setUploadPicture] = useState(false);
+  const [editProfile, setEditProfile] = useState(false);
 
   const { user_id } = useParams();
   const navigateTo = useNavigate();
@@ -96,7 +99,7 @@ export default function Profile() {
       
       try {
         
-        const response = await fetch('http://localhost:3000/api/friend/add', {
+        const response = await fetch('https://fakebook-server-omega.vercel.app/api/friend/add', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ currentUser: currentUser.user_id, selectedUser: selectedUser.user_id }),
@@ -113,7 +116,7 @@ export default function Profile() {
       
       try {
         
-        const response = await fetch('http://localhost:3000/api/friend/remove', {
+        const response = await fetch('https://fakebook-server-omega.vercel.app/api/friend/remove', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ currentUser: currentUser.user_id, selectedUser: selectedUser.user_id }),
@@ -141,10 +144,10 @@ export default function Profile() {
     setIsCreatePost(!isCreatePost);
   }
 
-  //TODO: Change to only fetch posts from the users that is being access
+  // TODO: Change to only fetch posts from the users that is being access
   async function fetchPosts(){
     try{
-      const response = await fetch('http://localhost:3000/api/posts');
+      const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts');
 
       if(!response.ok){
         throw new Error('Network response was no ok');
@@ -165,7 +168,7 @@ export default function Profile() {
   
   async function updatePosts(newPost){
     try{
-      const response = await fetch('http://localhost:3000/api/posts/create', {
+      const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts/create', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(newPost)
@@ -188,7 +191,7 @@ export default function Profile() {
     const fetchInitUserProfile = async () => {
        
       try {
-        const response = await fetch(`http://localhost:3000/api/user/profile/${user_id}`);
+        const response = await fetch(`https://fakebook-server-omega.vercel.app/api/user/profile/${user_id}`);
 
         if (response.ok) {
           console.log(`Retrieved ${user_id} from db`);
@@ -207,12 +210,11 @@ export default function Profile() {
     fetchInitUserProfile();
   }, [selectedUser.user_id, user_id, isFriend]);
 
-  console.log(selectedUser);
 
   useEffect(() => {
     const fetchUserPosts = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/posts');
+        const response = await fetch('https://fakebook-server-omega.vercel.app/api/posts');
 
         if (!response.ok) {
           throw new Error('Network response was no ok');
@@ -235,6 +237,11 @@ export default function Profile() {
 
   function handlePostCreation() {
     setIsCreatePost(!isCreatePost);
+  }
+
+  function handleEditProfile(){
+    (editProfile) ? document.body.style.overflow = 'auto' : document.body.style.overflow = 'hidden';
+    setEditProfile(!editProfile);
   }
 
 
@@ -291,7 +298,7 @@ export default function Profile() {
                 </div>
               </div>
 
-              {(isLoggedInUser) ? <button className="edit-profile-btn">Edit Profile</button> : <button className="add-friend-btn" onClick={toggleFriend}>{friendBtnText}</button>}
+              {(isLoggedInUser) ? <button className="edit-profile-btn" onClick={handleEditProfile}>Edit Profile</button> : <button className="add-friend-btn" onClick={toggleFriend}>{friendBtnText}</button>}
 
             </div>
 
@@ -387,6 +394,7 @@ export default function Profile() {
 
       </div>
       {(uploadPicture) ? <UploadPictureDisplay setUploadPicture={setUploadPicture} isImage={isImage}/> : ""}
+      {(editProfile) ? <EditProfilePopUp handleEditProfile={handleEditProfile} currentUser={currentUser}/> : ""}
     </div>
 
   );
